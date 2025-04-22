@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .chart-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="text-center">Resultados de la Encuesta</h1>
+    </header>
+    <hr />
+    <section>
+      <h3>Porcentaje de respuestas por pregunta y mes</h3>
+      <% Object.keys(dataPorPregunta).forEach(function(pregunta) { %>
+        <div class="chart-container">
+          <h4><%= pregunta %></h4>
+          <canvas id="chart-<%= pregunta %>" width="900" height="300"></canvas>
+        </div>
+      <% }); %>
+    </section>
+    <hr />
+    <section>
+      <a href="/" class="submit-button">Volver a la Encuesta</a>
+    </section>
+  </div>
+
+  <script>
+    // Función para decodificar base64 y parsear JSON
+    function decodeBase64Json(base64) {
+      const jsonString = atob(base64);
+      return JSON.parse(jsonString);
+    }
+
+    // Variables codificadas en base64
+    const mesesBase64 = '<%= Buffer.from(JSON.stringify(meses)).toString("base64") %>';
+    const dataPorPreguntaBase64 = '<%= Buffer.from(JSON.stringify(dataPorPregunta)).toString("base64") %>';
+    const opcionesRespuestaPorPreguntaBase64 = '<%= Buffer.from(JSON.stringify(opcionesRespuestaPorPregunta)).toString("base64") %>';
+
+    // Decodificar datos
+    const meses = decodeBase64Json(mesesBase64);
+    const dataPorPregunta = decodeBase64Json(dataPorPreguntaBase64);
+    const opcionesRespuestaPorPregunta = decodeBase64Json(opcionesRespuestaPorPreguntaBase64);
+
+    // Paleta de colores para los datasets
+    const colores = [
+      'rgba(54, 162, 235, 0.7)',
+      'rgba(255, 99, 132, 0.7)',
+      'rgba(201, 203, 207, 0.7)',
+      'rgba(255, 206, 86, 0.7)',
+      'rgba(75, 192, 192, 0.7)',
+      'rgba(153, 102, 255, 0.7)',
+      'rgba(255, 159, 64, 0.7)'
+    ];
+
+    // Función para calcular porcentaje
+    function calcularPorcentajes(data) {
+      return data.map(mesData => {
+        const total = Object.values(mesData).reduce((a,b) => a + b, 0);
+        const porcentajes = {};
+        for (const key in mesData) {
+          porcentajes[key] = total ? (mesData[key] / total * 100).toFixed(2) : 0;
+        }
+        return porcentajes;
+      });
+    }
+
+    // Crear gráficos por pregunta
+    Object.keys(dataPorPregunta).forEach((pregunta, idx) => {
+      const ctx = document.getElementById('chart-' + pregunta).getContext('2d');
+      const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
+      const porcentajes = calcularPorcentajes(mesesData);
+
+      // Construir datasets para cada opción
+      const opciones = opcionesRespuestaPorPregunta[pregunta];
+      const datasets = opciones.map((opcion, i) => {
+        return {
+          label: opcion,
+          data: porcentajes.map(p => parseFloat(p[opcion]) || 0),
+          backgroundColor: colores[i % colores.length],
+          borderColor: colores[i % colores.length].replace('0.7', '1'),
+          borderWidth: 1
+        };
+      });
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: meses,
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'Porcentaje de respuestas para ' + pregunta }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: function(value) {
+                  return value + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

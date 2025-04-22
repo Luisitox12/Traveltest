@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+<body>
+<br />
+<div class="container">
+  <header class="header">
+    <h1 class="text-center">Formato de Encuesta de Satisfacción.</h1>
+    <p class="text-center description">ESE Hospital San Rafael de Girardota.</p>
+  </header>
+  <hr><br />
+  <form method="POST" action="/submit">
+    <section>
+      <h3>Datos básicos</h3>
+      <div class="form-group">
+        <label for="tipoAtencion">Tipo de Atención: *</label>
+        <select class="form-control" id="tipoAtencion" name="tipoAtencion">
+          <option value="ce">Consulta Externa</option>
+          <option value="farm">Farmacia</option>
+          <option value="fisi">Fisioterapia</option>
+          <option value="fo">Fo</option>
+          <option value="hosp">Hospitalización</option>
+          <option value="odon">Odontología</option>
+          <option value="pyp">Promoción y Prevención</option>
+          <option value="rx">Rayos X</option>
+          <option value="urge">Urgencias</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fechaActual">Fecha Actual: *</label>
+        <input type="date" class="form-control" id="fechaActual" name="fechaActual" required>
+      </div>
+      <div class="form-group">
+        <label for="fechaAtencion">Fecha Atención: *</label>
+        <input type="date" class="form-control" id="fechaAtencion" name="fechaAtencion" required>
+      </div>
+      <div class="form-group">
+        <label for="nombreCompleto">Nombre Completo: *</label>
+        <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" maxlength="128" placeholder="Nombre Completo" required>
+      </div>
+      <div class="form-group">
+        <label for="edadEncuestado">Edad: *</label>
+        <input type="number" class="form-control" id="edadEncuestado" name="edadEncuestado" placeholder="Edad" maxlength="3" required/>
+      </div>
+      <div class="form-group">
+        <label for="idIdentificacion">Identificación: *</label>
+        <input type="number" id="idIdentificacion" name="idIdentificacion" class="form-control" placeholder="Número de Identificación" maxlength="15" required/>
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono: *</label>
+        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Número Telefónico" maxlength="12" required/>
+      </div>
+      <div class="form-group">
+        <label for="epsPaciente">EPS: *</label>
+        <input type="text" class="form-control" id="epsPaciente" name="epsPaciente" placeholder="EPS del Paciente" required />
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>Servicio</h3>
+      <div class="form-group">
+        <p>1- ¿Sabe usted que tiene derechos y deberes en salud?</p>
+        <label><input type="radio" name="pregunta1" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta1" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta1" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>2- ¿A su llegada al hospital los trámites de ingreso y atención fueron claros?</p>
+        <label><input type="radio" name="pregunta2" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta2" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta2" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>3- ¿Al ingreso al hospital encontró información visible que le indique el sitio donde va a ser atendido?</p>
+        <label><input type="radio" name="pregunta3" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta3" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta3" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>4- ¿Sabe usted en qué horario solicitar una cita y cuál es el número telefónico?</p>
+        <label><input type="radio" name="pregunta4" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta4" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta4" value="NA" class="input-radio"> N/A</label>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>Durante la Atención</h3>
+      <div class="form-group">
+        <p>5- ¿Está satisfecho con el tiempo que tuvo que esperar para ser atendido?</p>
+        <label><input type="radio" name="pregunta5" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta5" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta5" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>6- ¿El profesional le preguntó el motivo de la consulta, sus enfermedades anteriores y familiares?</p>
+        <label><input type="radio" name="pregunta6" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta6" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta6" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>7- ¿Considera que lo atendieron en condiciones de privacidad?</p>
+        <label><input type="radio" name="pregunta7" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta7" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta7" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>8- ¿El profesional que lo atendió se presentó por el nombre?</p>
+        <label><input type="radio" name="pregunta8" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta8" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta8" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>9- ¿Piensa que fue atendido amablemente en este hospital?</p>
+        <label><input type="radio" name="pregunta9" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta9" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta9" value="NA" class="input-radio"> N/A</label>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>Salida del usuario</h3>
+      <div class="form-group">
+        <p>10- ¿A usted y/o a su familia le dieron las recomendaciones sobre cómo cuidar su salud en casa?</p>
+        <label><input type="radio" name="pregunta10" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta10" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta10" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>11- ¿Las áreas del servicio donde fue atendido, se encontraban limpias, cómodas y agradables?</p>
+        <label><input type="radio" name="pregunta11" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta11" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta11" value="NA" class="input-radio"> N/A</label>
+      </div>
+      <div class="form-group">
+        <p>12- ¿Si se requiere volvería a utilizar nuestros servicios?</p>
+        <label><input type="radio" name="pregunta12" value="SI" class="input-radio"> Si</label>
+        <label><input type="radio" name="pregunta12" value="NO" class="input-radio"> No</label>
+        <label><input type="radio" name="pregunta12" value="NA" class="input-radio"> N/A</label>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>Satisfacción General</h3>
+      <div class="form-group">
+        <p>13- ¿Cómo calificaría su experiencia global respecto a los servicios de salud que ha recibido a través del Hospital?</p>
+        <select class="form-control" id="pregunta13" name="pregunta13">
+          <option value="5">Muy Buena</option>
+          <option value="4">Buena</option>
+          <option value="3">Regular</option>
+          <option value="2">Mala</option>
+          <option value="1">Muy Mala</option>
+          <option value="0">No Responde</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <p>14- ¿Recomendaría a sus familiares y amigos este Hospital?</p>
+        <select class="form-control" id="pregunta14" name="pregunta14">
+          <option value="5">Muy Buena</option>
+          <option value="4">Buena</option>
+          <option value="3">Regular</option>
+          <option value="2">Mala</option>
+          <option value="1">Muy Mala</option>
+          <option value="0">No Responde</option>
+        </select>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>Comentarios</h3>
+      <div class="form-group">
+        <label for="comentarios">Comentarios:</label>
+        <textarea class="form-control input-textarea" rows="6" id="comentarios" name="comentarios"></textarea>
+      </div>
+    </section>
+    <section>
+      <button type="submit" class="submit-button" id="saveForm">Guardar Encuesta</button>
+      <button type="reset" class="submit-button" id="clearForm">Limpiar formulario</button>
+    </section>
+  </form>
+</div>
+<footer class="container">
+  <p>Todos los derechos reservados para ESE Hospital San Rafael de Girardota.</p>
+</footer>
+</body>
+</html>
