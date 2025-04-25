@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Administrador</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="text-center">Login Administrador</h1>
+    </header>
+    <hr />
+    <% if (error) { %>
+      <p class="error-message"><%= error %></p>
+    <% } %>
+    <form method="POST" action="/admin/login">
+      <div class="form-group">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" required class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required class="form-control" />
+      </div>
+      <button type="submit" class="submit-button">Iniciar Sesión</button>
+    </form>
+    <hr />
+    <a href="/" class="submit-button">Volver a la Encuesta</a>
+  </div>
+</body>
+</html>

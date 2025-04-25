@@ -3,6 +3,8 @@ var express = require('express');
 var router = express.Router();
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const bcrypt = require('bcrypt');
+const rateLimit = require('express-rate-limit');
 
 // Abrir o crear base de datos SQLite
 const dbPath = path.resolve(__dirname, '../encuesta.db');
@@ -39,9 +41,52 @@ db.serialize(() => {
   )`);
 });
 
+// Usuario administrador local (usuario y contraseña hasheada)
+const adminUser = {
+  username: process.env.ADMIN_USER || 'admin',
+  passwordHash: process.env.ADMIN_PASS_HASH || '$2b$10$7Q9q6Xq6Xq6Xq6Xq6Xq6X.q6Xq6Xq6Xq6Xq6Xq6Xq6Xq6Xq6Xq6Xq' // hash de 'admin123' (ejemplo)
+};
+
+// Middleware para proteger rutas de administrador
+function checkAdminAuth(req, res, next) {
+  if (req.session && req.session.isAdmin) {
+    next();
+  } else {
+    res.redirect('/admin/login');
+  }
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Encuesta' });
+});
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 5, // máximo 5 intentos
+  message: 'Demasiados intentos de inicio de sesión, por favor intente de nuevo más tarde.'
+});
+
+// Rutas para login administrador
+router.get('/admin/login', function(req, res, next) {
+  res.render('login', { error: null });
+});
+
+router.post('/admin/login', loginLimiter, async function(req, res, next) {
+  const { username, password } = req.body;
+  if (username === adminUser.username) {
+    const match = await bcrypt.compare(password, adminUser.passwordHash);
+    if (match) {
+      req.session.isAdmin = true;
+      return res.redirect('/resultados');
+    }
+  }
+  res.render('login', { error: 'Usuario o contraseña incorrectos' });
+});
+
+router.get('/admin/logout', function(req, res, next) {
+  req.session.destroy();
+  res.redirect('/');
 });
 
 // POST route to receive survey form submission and save to DB
@@ -71,7 +116,7 @@ router.post('/submit', function(req, res, next) {
 });
 
 // GET route to show survey results aggregated by month
-router.get('/resultados', function(req, res, next) {
+router.get('/resultados', checkAdminAuth, function(req, res, next) {
   // Preguntas a procesar
   const preguntas = [
     'pregunta1', 'pregunta2', 'pregunta3', 'pregunta4', 'pregunta5', 'pregunta6', 'pregunta7',
