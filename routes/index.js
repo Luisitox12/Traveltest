@@ -5,6 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bcrypt = require('bcrypt');
 const rateLimit = require('express-rate-limit');
+const puppeteer = require('puppeteer');
 
 // Abrir o crear base de datos SQLite
 const dbPath = path.resolve(__dirname, '../encuesta.db');
@@ -112,8 +113,8 @@ router.post('/submit', function(req, res, next) {
   stmt.finalize();
 });
 
-// GET route to show survey results aggregated by month
-router.get('/resultados', checkAdminAuth, function(req, res, next) {
+// Función auxiliar para renderizar resultados
+function renderResultados(req, res, next) {
   // Preguntas a procesar
   const preguntas = [
     'pregunta1', 'pregunta2', 'pregunta3', 'pregunta4', 'pregunta5', 'pregunta6', 'pregunta7',
@@ -262,6 +263,83 @@ router.get('/resultados', checkAdminAuth, function(req, res, next) {
       });
     });
   });
+}
+
+// GET route to show survey results aggregated by month with authentication
+router.get('/resultados', checkAdminAuth, renderResultados);
+
+// GET route to show survey results aggregated by month without authentication (public)
+router.get('/resultados/public', renderResultados);
+
+// Modificar ruta /resultados/pdf para usar la ruta pública sin autenticación
+router.get('/resultados/pdf', async function(req, res, next) {
+  try {
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    const page = await browser.newPage();
+    const host = req.headers.host;
+    const protocol = req.protocol;
+    const url = `${protocol}://${host}/resultados/public`;
+    console.log('Generando PDF desde URL pública:', url);
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+    // Esperar que los gráficos y barras estén renderizados
+    await page.waitForFunction(() => {
+      const bars = document.querySelectorAll('.bar-fill');
+      return bars.length > 0 && Array.from(bars).every(bar => bar.offsetWidth > 0);
+    }, { timeout: 60000 });
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      landscape: false
+    });
+    await browser.close();
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="resultados.pdf"',
+      'Content-Length': pdfBuffer.length
+    });
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error('Error generando PDF:', error);
+    next(error);
+  }
+});
+
+module.exports = router;
+
+router.get('/resultados/pdf', async function(req, res, next) {
+  try {
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    const page = await browser.newPage();
+    const host = req.headers.host;
+    const protocol = req.protocol;
+    const url = `${protocol}://${host}/resultados`;
+    console.log('Generando PDF desde URL:', url);
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+    await page.waitForSelector('.bars-container', { timeout: 60000 });
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      landscape: false
+    });
+    await browser.close();
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="resultados.pdf"',
+      'Content-Length': pdfBuffer.length
+    });
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error('Error generando PDF:', error);
+    next(error);
+  }
 });
 
 module.exports = router;

@@ -27,6 +27,14 @@ body {
     background-attachment: fixed;
 }
 
+@media print {
+  body {
+    background-image: none !important;
+    background-color: #bddfbd !important;
+    background-attachment: scroll !important;
+  }
+}
+
 
 h1 {
     font-weight: 400;
@@ -179,5 +187,11 @@ form {
     width: 100%;
     max-width: 900px;
     margin: 20px auto;
+}
+
+@media print {
+  .container {
+    width: 794px; /* ancho aproximado A4 a 96dpi */
+    margin: 0 auto;
   }
-  
+}

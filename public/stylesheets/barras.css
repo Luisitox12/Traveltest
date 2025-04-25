@@ -11,16 +11,20 @@
 .bars-container h4 {
   margin-bottom: 1rem;
   color: #3e3e3e;
+  page-break-after: avoid;
+  page-break-inside: avoid;
 }
 
 .bar-wrapper {
   margin-bottom: 1rem;
+  page-break-inside: avoid;
 }
 
 .bar-label {
   font-weight: 600;
   margin-bottom: 0.25rem;
   color: #3e3e3e;
+  page-break-inside: avoid;
 }
 
 .bar {
@@ -28,7 +32,8 @@
   background-color: #FFA25B;
   border-radius: 12px;
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Cambiado de hidden a visible para mejorar paginación */
+  page-break-inside: avoid;
 }
 
 .bar-fill {
@@ -42,4 +47,21 @@
   line-height: 24px;
   white-space: nowrap;
   transition: width 0.5s ease-in-out;
+  width: var(--width, 0%);
+  page-break-inside: avoid;
+}
+
+@media print {
+  .bar-fill {
+    transition: none !important;
+    width: var(--width) !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    color: black !important;
+    background-color: #005792 !important;
+    padding-right: 5px !important;
+  }
+  .bar {
+    overflow: visible !important;
+  }
 }

@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><%= title %></title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
-  <link rel="stylesheet" href="/stylesheets/barras.css" />
+  <link rel="stylesheet" href="http://localhost:3000/stylesheets/style.css" />
+  <link rel="stylesheet" href="http://localhost:3000/stylesheets/barras.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
   <% 
@@ -58,7 +59,7 @@
           <div class="bar-wrapper">
             <div class="bar-label"><%= opcion %></div>
             <div class="bar">
-<div class="bar-fill" data-width="<%= promedioPorOpcion[opcion] %>">
+              <div class="bar-fill" data-width="<%= promedioPorOpcion[opcion] + '%' %>">
                 <%= promedioPorOpcion[opcion] %>%
               </div>
             </div>
@@ -159,16 +160,30 @@
         }
       });
     });
-  </script>
-  <script>
-    // Asignar el ancho de las barras dinámicamente usando data-width
-    document.addEventListener('DOMContentLoaded', function() {
-      const barras = document.querySelectorAll('.bar-fill');
+
+    // Aplicar ancho a las barras horizontales dinámicamente
+    document.addEventListener('DOMContentLoaded', () => {
+      const barras = document.querySelectorAll('.bar-fill[data-width]');
       barras.forEach(barra => {
         const width = barra.getAttribute('data-width');
-        barra.style.width = width + '%';
+        barra.style.width = width;
+        // Aplicar también como variable CSS para compatibilidad
+        barra.style.setProperty('--width', width);
       });
     });
+  </script>
+
+  <script>
+    function aplicarAnchoBarras() {
+      const barras = document.querySelectorAll('.bar-fill[data-width]');
+      barras.forEach(barra => {
+        const width = barra.getAttribute('data-width');
+        barra.style.width = width;
+        barra.style.setProperty('--width', width);
+      });
+    }
+    document.addEventListener('DOMContentLoaded', aplicarAnchoBarras);
+    window.addEventListener('beforeprint', aplicarAnchoBarras);
   </script>
 </body>
 </html>
