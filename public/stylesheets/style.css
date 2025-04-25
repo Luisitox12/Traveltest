@@ -174,3 +174,10 @@ form {
     padding: 0.625rem;
     text-align: center;
 }
+
+.chart-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+  }
+  

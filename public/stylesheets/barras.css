@@ -1,0 +1,45 @@
+/* Estilos para las barras de porcentaje */
+
+.bars-container {
+  max-width: 900px;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.bars-container h4 {
+  margin-bottom: 1rem;
+  color: #3e3e3e;
+}
+
+.bar-wrapper {
+  margin-bottom: 1rem;
+}
+
+.bar-label {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #3e3e3e;
+}
+
+.bar {
+  height: 24px;
+  background-color: #FFA25B;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background-color: #005792;
+  border-radius: 12px 0 0 12px;
+  text-align: right;
+  padding-right: 10px;
+  color: #f3f3f3;
+  font-weight: 700;
+  line-height: 24px;
+  white-space: nowrap;
+  transition: width 0.5s ease-in-out;
+}

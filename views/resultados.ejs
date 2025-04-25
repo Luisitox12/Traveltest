@@ -5,16 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><%= title %></title>
   <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/barras.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .chart-container {
-      width: 100%;
-      max-width: 900px;
-      margin: 20px auto;
-    }
-  </style>
 </head>
 <body>
+  <% 
+    function calcularPorcentajes(data) {
+      return data.map(mesData => {
+        const total = Object.values(mesData).reduce((a,b) => a + b, 0);
+        const porcentajes = {};
+        for (const key in mesData) {
+          porcentajes[key] = total ? (mesData[key] / total * 100).toFixed(2) : 0;
+        }
+        return porcentajes;
+      });
+    }
+  %>
   <div class="container">
     <header class="header">
       <h1 class="text-center">Resultados de la Encuesta</h1>
@@ -27,6 +33,37 @@
           <h4><%= pregunta %></h4>
           <canvas id="chart-<%= pregunta %>" width="900" height="300"></canvas>
         </div>
+      <% }); %>
+    </section>
+    <hr />
+    <section class="bars-container">
+      <h3>Barras con porcentaje por pregunta y opción</h3>
+      <% Object.keys(dataPorPregunta).forEach(function(pregunta) { %>
+        <h4><%= pregunta %></h4>
+        <% 
+          const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
+          const porcentajes = calcularPorcentajes(mesesData);
+          const opciones = opcionesRespuestaPorPregunta[pregunta];
+          // Calcular porcentaje promedio por opción en todos los meses
+          const promedioPorOpcion = {};
+          opciones.forEach(opcion => {
+            let suma = 0;
+            porcentajes.forEach(p => {
+              suma += parseFloat(p[opcion]) || 0;
+            });
+            promedioPorOpcion[opcion] = (suma / porcentajes.length).toFixed(2);
+          });
+        %>
+        <% opciones.forEach(function(opcion) { %>
+          <div class="bar-wrapper">
+            <div class="bar-label"><%= opcion %></div>
+            <div class="bar">
+<div class="bar-fill" data-width="<%= promedioPorOpcion[opcion] %>">
+                <%= promedioPorOpcion[opcion] %>%
+              </div>
+            </div>
+          </div>
+        <% }); %>
       <% }); %>
     </section>
     <hr />
@@ -120,6 +157,16 @@
             }
           }
         }
+      });
+    });
+  </script>
+  <script>
+    // Asignar el ancho de las barras dinámicamente usando data-width
+    document.addEventListener('DOMContentLoaded', function() {
+      const barras = document.querySelectorAll('.bar-fill');
+      barras.forEach(barra => {
+        const width = barra.getAttribute('data-width');
+        barra.style.width = width + '%';
       });
     });
   </script>
