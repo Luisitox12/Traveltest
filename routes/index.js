@@ -19,9 +19,6 @@ db.serialize(() => {
     fechaAtencion TEXT,
     nombreCompleto TEXT,
     edadEncuestado INTEGER,
-    idIdentificacion TEXT,
-    telefono TEXT,
-    epsPaciente TEXT,
     pregunta1 TEXT,
     pregunta2 TEXT,
     pregunta3 TEXT,
@@ -95,13 +92,13 @@ router.post('/submit', function(req, res, next) {
   const fechaRegistro = new Date().toISOString();
 
   const stmt = db.prepare(`INSERT INTO respuestas (
-    tipoAtencion, fechaActual, fechaAtencion, nombreCompleto, edadEncuestado, idIdentificacion, telefono, epsPaciente,
+    tipoAtencion, fechaActual, fechaAtencion, nombreCompleto, edadEncuestado,
     pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9,
     pregunta10, pregunta11, pregunta12, pregunta13, pregunta14, comentarios, fechaRegistro
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 
   stmt.run(
-    r.tipoAtencion, r.fechaActual, r.fechaAtencion, r.nombreCompleto, r.edadEncuestado, r.idIdentificacion, r.telefono, r.epsPaciente,
+    r.tipoAtencion, r.fechaActual, r.fechaAtencion, r.nombreCompleto, r.edadEncuestado,
     r.pregunta1, r.pregunta2, r.pregunta3, r.pregunta4, r.pregunta5, r.pregunta6, r.pregunta7, r.pregunta8, r.pregunta9,
     r.pregunta10, r.pregunta11, r.pregunta12, r.pregunta13, r.pregunta14, r.comentarios, fechaRegistro,
     function(err) {

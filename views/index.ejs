@@ -35,6 +35,14 @@
         <label for="fechaActual">Fecha Actual: *</label>
         <input type="date" class="form-control" id="fechaActual" name="fechaActual" required>
       </div>
+      <script>
+        // Establecer fecha actual automáticamente en el campo fechaActual
+        document.addEventListener('DOMContentLoaded', function() {
+          const fechaInput = document.getElementById('fechaActual');
+          const hoy = new Date().toISOString().split('T')[0];
+          fechaInput.value = hoy;
+        });
+      </script>
       <div class="form-group">
         <label for="fechaAtencion">Fecha Atención: *</label>
         <input type="date" class="form-control" id="fechaAtencion" name="fechaAtencion" required>
@@ -47,18 +55,7 @@
         <label for="edadEncuestado">Edad: *</label>
         <input type="number" class="form-control" id="edadEncuestado" name="edadEncuestado" placeholder="Edad" maxlength="3" required/>
       </div>
-      <div class="form-group">
-        <label for="idIdentificacion">Identificación: *</label>
-        <input type="number" id="idIdentificacion" name="idIdentificacion" class="form-control" placeholder="Número de Identificación" maxlength="15" required/>
-      </div>
-      <div class="form-group">
-        <label for="telefono">Teléfono: *</label>
-        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Número Telefónico" maxlength="12" required/>
-      </div>
-      <div class="form-group">
-        <label for="epsPaciente">EPS: *</label>
-        <input type="text" class="form-control" id="epsPaciente" name="epsPaciente" placeholder="EPS del Paciente" required />
-      </div>
+      <!-- Campos eliminados: idIdentificacion, telefono, epsPaciente -->
     </section>
     <hr />
     <section>
