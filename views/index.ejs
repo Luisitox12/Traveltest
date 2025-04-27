@@ -10,171 +10,238 @@
 <br />
 <div class="container">
   <header class="header">
-    <h1 class="text-center">Formato de Encuesta de Satisfacción.</h1>
-    <p class="text-center description">ESE Hospital San Rafael de Girardota.</p>
+    <h1 class="text-center">Encuesta de Evaluación FAM TRIP a Barquisimeto</h1>
+    <p class="text-center description">Este formato está diseñado para evaluar la experiencia de los participantes y recopilar sugerencias para futuros viajes.</p>
   </header>
   <hr><br />
   <form method="POST" action="/submit">
     <section>
       <h3>Datos básicos</h3>
       <div class="form-group">
-        <label for="tipoAtencion">Tipo de Atención: *</label>
-        <select class="form-control" id="tipoAtencion" name="tipoAtencion">
-          <option value="ce">Consulta Externa</option>
-          <option value="farm">Farmacia</option>
-          <option value="fisi">Fisioterapia</option>
-          <option value="fo">Fo</option>
-          <option value="hosp">Hospitalización</option>
-          <option value="odon">Odontología</option>
-          <option value="pyp">Promoción y Prevención</option>
-          <option value="rx">Rayos X</option>
-          <option value="urge">Urgencias</option>
-        </select>
+        <label for="nombreCompleto">Nombre Completo: *</label>
+        <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" maxlength="128" placeholder="Nombre Completo" required>
       </div>
       <div class="form-group">
         <label for="fechaActual">Fecha Actual: *</label>
         <input type="date" class="form-control" id="fechaActual" name="fechaActual" required>
       </div>
-      <script>
-        // Establecer fecha actual automáticamente en el campo fechaActual
-        document.addEventListener('DOMContentLoaded', function() {
-          const fechaInput = document.getElementById('fechaActual');
-          const hoy = new Date().toISOString().split('T')[0];
-          fechaInput.value = hoy;
-        });
-      </script>
-      <div class="form-group">
-        <label for="fechaAtencion">Fecha Atención: *</label>
-        <input type="date" class="form-control" id="fechaAtencion" name="fechaAtencion" required>
-      </div>
-      <div class="form-group">
-        <label for="nombreCompleto">Nombre Completo: *</label>
-        <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" maxlength="128" placeholder="Nombre Completo" required>
-      </div>
       <div class="form-group">
         <label for="edadEncuestado">Edad: *</label>
         <input type="number" class="form-control" id="edadEncuestado" name="edadEncuestado" placeholder="Edad" maxlength="3" required/>
       </div>
-      <!-- Campos eliminados: idIdentificacion, telefono, epsPaciente -->
     </section>
     <hr />
     <section>
-      <h3>Servicio</h3>
+      <h3>1. Evaluación general del viaje</h3>
       <div class="form-group">
-        <p>1- ¿Sabe usted que tiene derechos y deberes en salud?</p>
-        <label><input type="radio" name="pregunta1" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta1" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta1" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>2- ¿A su llegada al hospital los trámites de ingreso y atención fueron claros?</p>
-        <label><input type="radio" name="pregunta2" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta2" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta2" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>3- ¿Al ingreso al hospital encontró información visible que le indique el sitio donde va a ser atendido?</p>
-        <label><input type="radio" name="pregunta3" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta3" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta3" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>4- ¿Sabe usted en qué horario solicitar una cita y cuál es el número telefónico?</p>
-        <label><input type="radio" name="pregunta4" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta4" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta4" value="NA" class="input-radio"> N/A</label>
-      </div>
-    </section>
-    <hr />
-    <section>
-      <h3>Durante la Atención</h3>
-      <div class="form-group">
-        <p>5- ¿Está satisfecho con el tiempo que tuvo que esperar para ser atendido?</p>
-        <label><input type="radio" name="pregunta5" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta5" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta5" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>6- ¿El profesional le preguntó el motivo de la consulta, sus enfermedades anteriores y familiares?</p>
-        <label><input type="radio" name="pregunta6" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta6" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta6" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>7- ¿Considera que lo atendieron en condiciones de privacidad?</p>
-        <label><input type="radio" name="pregunta7" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta7" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta7" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>8- ¿El profesional que lo atendió se presentó por el nombre?</p>
-        <label><input type="radio" name="pregunta8" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta8" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta8" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>9- ¿Piensa que fue atendido amablemente en este hospital?</p>
-        <label><input type="radio" name="pregunta9" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta9" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta9" value="NA" class="input-radio"> N/A</label>
-      </div>
-    </section>
-    <hr />
-    <section>
-      <h3>Salida del usuario</h3>
-      <div class="form-group">
-        <p>10- ¿A usted y/o a su familia le dieron las recomendaciones sobre cómo cuidar su salud en casa?</p>
-        <label><input type="radio" name="pregunta10" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta10" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta10" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>11- ¿Las áreas del servicio donde fue atendido, se encontraban limpias, cómodas y agradables?</p>
-        <label><input type="radio" name="pregunta11" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta11" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta11" value="NA" class="input-radio"> N/A</label>
-      </div>
-      <div class="form-group">
-        <p>12- ¿Si se requiere volvería a utilizar nuestros servicios?</p>
-        <label><input type="radio" name="pregunta12" value="SI" class="input-radio"> Si</label>
-        <label><input type="radio" name="pregunta12" value="NO" class="input-radio"> No</label>
-        <label><input type="radio" name="pregunta12" value="NA" class="input-radio"> N/A</label>
-      </div>
-    </section>
-    <hr />
-    <section>
-      <h3>Satisfacción General</h3>
-      <div class="form-group">
-        <p>13- ¿Cómo calificaría su experiencia global respecto a los servicios de salud que ha recibido a través del Hospital?</p>
-        <select class="form-control" id="pregunta13" name="pregunta13">
-          <option value="5">Muy Buena</option>
-          <option value="4">Buena</option>
-          <option value="3">Regular</option>
-          <option value="2">Mala</option>
-          <option value="1">Muy Mala</option>
-          <option value="0">No Responde</option>
+        <p>¿Cómo califica su experiencia, en general, en el FAM TRIP a Barquisimeto?</p>
+        <select class="form-control" id="pregunta1" name="pregunta1" required>
+          <option value="">Seleccione</option>
+          <option value="Excelente">Excelente</option>
+          <option value="Buena">Buena</option>
+          <option value="Regular">Regular</option>
+          <option value="Mala">Mala</option>
         </select>
       </div>
       <div class="form-group">
-        <p>14- ¿Recomendaría a sus familiares y amigos este Hospital?</p>
-        <select class="form-control" id="pregunta14" name="pregunta14">
-          <option value="5">Muy Buena</option>
-          <option value="4">Buena</option>
-          <option value="3">Regular</option>
-          <option value="2">Mala</option>
-          <option value="1">Muy Mala</option>
-          <option value="0">No Responde</option>
+        <p>¿Le gustaría participar nuevamente en un FAM TRIP organizado por el departamento organizador?</p>
+        <label><input type="radio" name="pregunta2" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta2" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta2_comentarios" placeholder="Comentarios (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué aspectos considera que definieron el éxito del FAM TRIP?</p>
+        <textarea class="form-control" name="pregunta3" placeholder="Ejemplo: Organización, destinos, actividades, atención, etc." required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Cómo califica la relación calidad/precio del FAM TRIP?</p>
+        <select class="form-control" id="pregunta4" name="pregunta4" required>
+          <option value="">Seleccione</option>
+          <option value="Excelente">Excelente</option>
+          <option value="Buena">Buena</option>
+          <option value="Regular">Regular</option>
+          <option value="Mala">Mala</option>
         </select>
       </div>
     </section>
     <hr />
     <section>
-      <h3>Comentarios</h3>
+      <h3>2. Opinión sobre los destinos visitados</h3>
       <div class="form-group">
-        <label for="comentarios">Comentarios:</label>
-        <textarea class="form-control input-textarea" rows="6" id="comentarios" name="comentarios"></textarea>
+        <p>¿Qué lugares visitados en Barquisimeto le parecieron más interesantes o relevantes?</p>
+        <select class="form-control" id="pregunta5" name="pregunta5" multiple size="6" required>
+          <option value="Restaurante Suelo Larense">Restaurante Suelo Larense</option>
+          <option value="Obelisco de Barquisimeto">Obelisco de Barquisimeto</option>
+          <option value="Parque Ayacucho">Parque Ayacucho</option>
+          <option value="Centro Histórico de Barquisimeto">Centro Histórico de Barquisimeto</option>
+          <option value="Santa Rosa">Santa Rosa</option>
+          <option value="Arena Parque Acuático">Arena Parque Acuático</option>
+          <option value="Flor de Venezuela">Flor de Venezuela</option>
+          <option value="Otro">Otro (especifique en comentarios)</option>
+        </select>
+        <textarea class="form-control" name="pregunta5_otro" placeholder="Si seleccionó 'Otro', especifique aquí"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Considera que la duración en cada destino fue adecuada?</p>
+        <label><input type="radio" name="pregunta6" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta6" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta6_comentarios" placeholder="Comentarios (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué lugares deben ser incluidos en el itinerario que le hubiera gustado visitar?</p>
+        <textarea class="form-control" name="pregunta7" placeholder="Respuesta abierta" required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿El balance entre turismo cultural, recreativo y gastronómico fue adecuado?</p>
+        <label><input type="radio" name="pregunta8" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta8" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta8_comentarios" placeholder="Detalles (opcional)"></textarea>
       </div>
     </section>
+    <hr />
+    <section>
+      <h3>3. Organización y logística</h3>
+      <div class="form-group">
+        <p>¿Cómo evalúa la puntualidad y coordinación de los horarios del FAM TRIP?</p>
+        <select class="form-control" id="pregunta9" name="pregunta9" required>
+          <option value="">Seleccione</option>
+          <option value="1">1 - Muy mala</option>
+          <option value="2">2 - Mala</option>
+          <option value="3">3 - Regular</option>
+          <option value="4">4 - Buena</option>
+          <option value="5">5 - Excelente</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <p>¿El transporte utilizado durante el FAM TRIP cumplió con sus expectativas de comodidad y eficiencia?</p>
+        <select class="form-control" id="pregunta10" name="pregunta10" required>
+          <option value="">Seleccione</option>
+          <option value="1">1 - Muy mala</option>
+          <option value="2">2 - Mala</option>
+          <option value="3">3 - Regular</option>
+          <option value="4">4 - Buena</option>
+          <option value="5">5 - Excelente</option>
+        </select>
+        <textarea class="form-control" name="pregunta10_comentarios" placeholder="Comentarios (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Recibió toda la información necesaria sobre el itinerario, destinos y recomendaciones antes del viaje?</p>
+        <label><input type="radio" name="pregunta11" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta11" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta11_comentarios" placeholder="Detalles (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Considera que el personal de protocolo estuvo disponible y fue resolutivo?</p>
+        <label><input type="radio" name="pregunta12" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta12" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta12_comentarios" placeholder="Explique (opcional)"></textarea>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>4. Actividades realizadas</h3>
+      <div class="form-group">
+        <p>¿Qué actividades le resultaron más significativas durante el FAM TRIP?</p>
+        <textarea class="form-control" name="pregunta13" placeholder="Ejemplos: Visitas culturales, recorridos naturales, actividades recreativas" required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Considera que hubo un equilibrio adecuado entre actividades recreativas, culturales y gastronómicas?</p>
+        <label><input type="radio" name="pregunta14" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta14" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta14_comentarios" placeholder="Comentarios (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Alguna actividad le pareció innecesaria o poco interesante?</p>
+        <textarea class="form-control" name="pregunta15" placeholder="Respuesta abierta" required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué actividades adicionales le gustaría que se incluyan en futuros viajes?</p>
+        <textarea class="form-control" name="pregunta16" placeholder="Respuesta abierta" required></textarea>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>5. Satisfacción con los servicios</h3>
+      <div class="form-group">
+        <p>¿Cómo califica la calidad de los hoteles y hospedajes seleccionados?</p>
+        <select class="form-control" id="pregunta17" name="pregunta17" required>
+          <option value="">Seleccione</option>
+          <option value="1">1 - Muy mala</option>
+          <option value="2">2 - Mala</option>
+          <option value="3">3 - Regular</option>
+          <option value="4">4 - Buena</option>
+          <option value="5">5 - Excelente</option>
+        </select>
+        <textarea class="form-control" name="pregunta17_comentarios" placeholder="Comentarios (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Considera que recibió una atención adecuada por parte del equipo organizador durante el viaje?</p>
+        <label><input type="radio" name="pregunta18" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta18" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta18_comentarios" placeholder="Detalles (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Hubo algún aspecto de los servicios ofrecidos que no cumplió con sus expectativas?</p>
+        <label><input type="radio" name="pregunta19" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta19" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta19_comentarios" placeholder="Detalles (opcional)"></textarea>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>6. Sugerencias y expectativas</h3>
+      <div class="form-group">
+        <p>¿El FAM TRIP le ayudó a identificar oportunidades comerciales o alianzas estratégicas?</p>
+        <label><input type="radio" name="pregunta20" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta20" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta20_comentarios" placeholder="Explique (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué elementos del FAM TRIP considera más relevante para su negocio o actividad profesional?</p>
+        <textarea class="form-control" name="pregunta21" placeholder="Respuesta abierta" required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Recomienda este tipo de experiencia a otros colegas o socios comerciales?</p>
+        <label><input type="radio" name="pregunta22" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta22" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta22_comentarios" placeholder="Explique (opcional)"></textarea>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>7. Valoración del destino Barquisimeto</h3>
+      <div class="form-group">
+        <p>¿Cree que Barquisimeto tiene potencial para posicionarse como un destino destacado en el turismo nacional e internacional?</p>
+        <label><input type="radio" name="pregunta23" value="Sí" required> Sí</label>
+        <label><input type="radio" name="pregunta23" value="No" required> No</label>
+        <textarea class="form-control" name="pregunta23_comentarios" placeholder="Sugerencias (opcional)"></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué aspectos del destino le sorprendieron positivamente?</p>
+        <textarea class="form-control" name="pregunta24" placeholder="Respuesta abierta" required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué aspectos del destino considera que pueden mejorarse para futuras experiencias turísticas?</p>
+        <textarea class="form-control" name="pregunta25" placeholder="Respuesta abierta" required></textarea>
+      </div>
+    </section>
+    <hr />
+    <section>
+      <h3>8. Sugerencias para futuros FAM TRIPS</h3>
+      <div class="form-group">
+        <p>¿Qué destinos o regiones recomienda visitar en próximos FAM TRIPS organizados por el departamento organizador?</p>
+        <textarea class="form-control" name="pregunta26" placeholder="Respuesta abierta" required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué valor agregado le gustaría que se incluya en futuros itinerarios?</p>
+        <textarea class="form-control" name="pregunta27" placeholder="Respuesta abierta" required></textarea>
+      </div>
+      <div class="form-group">
+        <p>¿Qué otras recomendaciones o sugerencias, en forma general, desea compartir con el equipo organizador?</p>
+        <textarea class="form-control" name="pregunta28" placeholder="Respuesta abierta" required></textarea>
+      </div>
+    </section>
+    <hr />
     <section>
       <button type="submit" class="submit-button" id="saveForm">Guardar Encuesta</button>
       <button type="reset" class="submit-button" id="clearForm">Limpiar formulario</button>
@@ -187,5 +254,13 @@
   <div class="admin-login">
     <a href="/admin/login" class="submit-button">Login Administrador</a>
   </div>
+  <script>
+    // Establecer fecha actual automáticamente en el campo fechaActual
+    document.addEventListener('DOMContentLoaded', function() {
+      const fechaInput = document.getElementById('fechaActual');
+      const hoy = new Date().toISOString().split('T')[0];
+      fechaInput.value = hoy;
+    });
+  </script>
 </body>
 </html>
