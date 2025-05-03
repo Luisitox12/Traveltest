@@ -10,27 +10,11 @@
 <br />
 <div class="container">
   <header class="header">
-    <h1 class="text-center">Encuesta de Evaluación FAM TRIP a Barquisimeto</h1>
-    <p class="text-center description">Este formato está diseñado para evaluar la experiencia de los participantes y recopilar sugerencias para futuros viajes.</p>
+    <h1 class="text-center">Encuesta de evaluación del FAM TRIP a Barquisimeto 2025</h1>
+    <p class="text-center description">Este formato está diseñado con el fin de evaluar la experiencia de los participantes y recopilar sugerencias para futuros viajes:</p>
   </header>
   <hr><br />
   <form method="POST" action="/submit">
-    <section>
-      <h3>Datos básicos</h3>
-      <div class="form-group">
-        <label for="nombreCompleto">Nombre Completo: *</label>
-        <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" maxlength="128" placeholder="Nombre Completo" required>
-      </div>
-      <div class="form-group">
-        <label for="fechaActual">Fecha Actual: *</label>
-        <input type="date" class="form-control" id="fechaActual" name="fechaActual" required>
-      </div>
-      <div class="form-group">
-        <label for="edadEncuestado">Edad: *</label>
-        <input type="number" class="form-control" id="edadEncuestado" name="edadEncuestado" placeholder="Edad" maxlength="3" required/>
-      </div>
-    </section>
-    <hr />
     <section>
       <h3>1. Evaluación general del viaje</h3>
       <div class="form-group">
@@ -68,8 +52,8 @@
     <section>
       <h3>2. Opinión sobre los destinos visitados</h3>
       <div class="form-group">
-        <p>¿Qué lugares visitados en Barquisimeto le parecieron más interesantes o relevantes?</p>
-        <select class="form-control" id="pregunta5" name="pregunta5" multiple size="6" required>
+        <p>¿Qué lugares visitados en Barquisimeto, le pareció más interesante o relevante?</p>
+        <select class="form-control" id="pregunta5" name="pregunta5" multiple size="8" required>
           <option value="Restaurante Suelo Larense">Restaurante Suelo Larense</option>
           <option value="Obelisco de Barquisimeto">Obelisco de Barquisimeto</option>
           <option value="Parque Ayacucho">Parque Ayacucho</option>
@@ -102,7 +86,7 @@
     <section>
       <h3>3. Organización y logística</h3>
       <div class="form-group">
-        <p>¿Cómo evalúa la puntualidad y coordinación de los horarios del FAM TRIP?</p>
+        <p>¿Cómo evalua la puntualidad y coordinación de los horarios del FAM TRIP?</p>
         <select class="form-control" id="pregunta9" name="pregunta9" required>
           <option value="">Seleccione</option>
           <option value="1">1 - Muy mala</option>
@@ -227,9 +211,9 @@
     </section>
     <hr />
     <section>
-      <h3>8. Sugerencias para futuros FAM TRIPS</h3>
+      <h3>8. Sugerencias para futuros FAM TRIP</h3>
       <div class="form-group">
-        <p>¿Qué destinos o regiones recomienda visitar en próximos FAM TRIPS organizados por el departamento organizador?</p>
+        <p>¿Qué destinos o regiones recomienda visitar en próximos FAM TRIP organizados por el departamento organizador?</p>
         <textarea class="form-control" name="pregunta26" placeholder="Respuesta abierta" required></textarea>
       </div>
       <div class="form-group">

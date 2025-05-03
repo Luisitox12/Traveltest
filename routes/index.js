@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 const sqlite3 = require('sqlite3').verbose();
@@ -399,38 +398,3 @@ router.get('/resultados/pdf', async function(req, res, next) {
 });
 
 module.exports = router;
-
-router.get('/resultados/pdf', async function(req, res, next) {
-  try {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    const page = await browser.newPage();
-    const host = req.headers.host;
-    const protocol = req.protocol;
-    const url = `${protocol}://${host}/resultados`;
-    console.log('Generando PDF desde URL:', url);
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
-    await page.waitForSelector('.bars-container', { timeout: 60000 });
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      landscape: false
-    });
-    await browser.close();
-
-    res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="resultados.pdf"',
-      'Content-Length': pdfBuffer.length
-    });
-    res.send(pdfBuffer);
-  } catch (error) {
-    console.error('Error generando PDF:', error);
-    next(error);
-  }
-});
-
-module.exports = router;
-
