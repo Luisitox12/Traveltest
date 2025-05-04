@@ -51,6 +51,15 @@
         return porcentajes;
       });
     }
+
+    // Función para ordenar las claves de preguntas numéricamente
+    function ordenarPreguntas(keys) {
+      return keys.sort((a, b) => {
+        const numA = parseInt(a.replace('pregunta', ''), 10);
+        const numB = parseInt(b.replace('pregunta', ''), 10);
+        return numA - numB;
+      });
+    }
   %>
   <div class="container">
     <header class="header">
@@ -59,7 +68,10 @@
     <hr />
     <section class="bars-container">
       <h3>Barras con porcentaje por pregunta y opción</h3>
-      <% Object.keys(dataPorPregunta).forEach(function(pregunta) { %>
+      <% 
+        const preguntasOrdenadas = ordenarPreguntas(Object.keys(dataPorPregunta));
+        preguntasOrdenadas.forEach(function(pregunta) { 
+      %>
         <h4><%= textosPreguntas[pregunta] || pregunta %></h4>
         <% 
           const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
