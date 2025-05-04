@@ -11,6 +11,38 @@
 </head>
 <body>
   <% 
+    // Mapeo de preguntas a sus textos extraídos del formulario
+    const textosPreguntas = {
+      pregunta1: "1. ¿Cómo califica su experiencia, en general, en el FAM TRIP a Barquisimeto?",
+      pregunta2: "2. ¿Le gustaría participar nuevamente en un FAM TRIP organizado por el departamento organizador?",
+      pregunta3: "3. ¿Qué aspectos considera que definieron el éxito del FAM TRIP?",
+      pregunta4: "4. ¿Cómo califica la relación calidad/precio del FAM TRIP?",
+      pregunta5: "5. ¿Qué lugares visitados en Barquisimeto, le pareció más interesante o relevante?",
+      pregunta6: "6. ¿Considera que la duración en cada destino fue adecuada?",
+      pregunta7: "7. ¿Qué lugares deben ser incluidos en el itinerario que le hubiera gustado visitar?",
+      pregunta8: "8. ¿El balance entre turismo cultural, recreativo y gastronómico fue adecuado?",
+      pregunta9: "9. ¿Cómo evalua la puntualidad y coordinación de los horarios del FAM TRIP?",
+      pregunta10: "10. ¿El transporte utilizado durante el FAM TRIP cumplió con sus expectativas de comodidad y eficiencia?",
+      pregunta11: "11. ¿Recibió toda la información necesaria sobre el itinerario, destinos y recomendaciones antes del viaje?",
+      pregunta12: "12. ¿Considera que el personal de protocolo estuvo disponible y fue resolutivo?",
+      pregunta13: "13. ¿Qué actividades le resultaron más significativas durante el FAM TRIP?",
+      pregunta14: "14. ¿Considera que hubo un equilibrio adecuado entre actividades recreativas, culturales y gastronómicas?",
+      pregunta15: "15. ¿Alguna actividad le pareció innecesaria o poco interesante?",
+      pregunta16: "16. ¿Qué actividades adicionales le gustaría que se incluyan en futuros viajes?",
+      pregunta17: "17. ¿Cómo califica la calidad de los hoteles y hospedajes seleccionados?",
+      pregunta18: "18. ¿Considera que recibió una atención adecuada por parte del equipo organizador durante el viaje?",
+      pregunta19: "19. ¿Hubo algún aspecto de los servicios ofrecidos que no cumplió con sus expectativas?",
+      pregunta20: "20. ¿El FAM TRIP le ayudó a identificar oportunidades comerciales o alianzas estratégicas?",
+      pregunta21: "21. ¿Qué elementos del FAM TRIP considera más relevante para su negocio o actividad profesional?",
+      pregunta22: "22. ¿Recomienda este tipo de experiencia a otros colegas o socios comerciales?",
+      pregunta23: "23. ¿Cree que Barquisimeto tiene potencial para posicionarse como un destino destacado en el turismo nacional e internacional?",
+      pregunta24: "24. ¿Qué aspectos del destino le sorprendieron positivamente?",
+      pregunta25: "25. ¿Qué aspectos del destino considera que pueden mejorarse para futuras experiencias turísticas?",
+      pregunta26: "26. ¿Qué destinos o regiones recomienda visitar en próximos FAM TRIP organizados por el departamento organizador?",
+      pregunta27: "27. ¿Qué valor agregado le gustaría que se incluya en futuros itinerarios?",
+      pregunta28: "28. ¿Qué otras recomendaciones o sugerencias, en forma general, desea compartir con el equipo organizador?"
+    };
+
     function calcularPorcentajes(data) {
       return data.map(mesData => {
         const total = Object.values(mesData).reduce((a,b) => a + b, 0);
@@ -31,7 +63,7 @@
       <h3>Porcentaje de respuestas por pregunta y mes</h3>
       <% Object.keys(dataPorPregunta).forEach(function(pregunta) { %>
         <div class="chart-container">
-          <h4><%= pregunta %></h4>
+          <h4><%= textosPreguntas[pregunta] || pregunta %></h4>
           <canvas id="chart-<%= pregunta %>" width="900" height="300"></canvas>
         </div>
       <% }); %>
@@ -40,12 +72,11 @@
     <section class="bars-container">
       <h3>Barras con porcentaje por pregunta y opción</h3>
       <% Object.keys(dataPorPregunta).forEach(function(pregunta) { %>
-        <h4><%= pregunta %></h4>
+        <h4><%= textosPreguntas[pregunta] || pregunta %></h4>
         <% 
           const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
           const porcentajes = calcularPorcentajes(mesesData);
           const opciones = opcionesRespuestaPorPregunta[pregunta];
-          // Calcular porcentaje promedio por opción en todos los meses
           const promedioPorOpcion = {};
           opciones.forEach(opcion => {
             let suma = 0;
@@ -77,23 +108,19 @@
   </div>
 
   <script>
-    // Función para decodificar base64 y parsear JSON
     function decodeBase64Json(base64) {
       const jsonString = atob(base64);
       return JSON.parse(jsonString);
     }
 
-    // Variables codificadas en base64
     const mesesBase64 = '<%= Buffer.from(JSON.stringify(meses)).toString("base64") %>';
     const dataPorPreguntaBase64 = '<%= Buffer.from(JSON.stringify(dataPorPregunta)).toString("base64") %>';
     const opcionesRespuestaPorPreguntaBase64 = '<%= Buffer.from(JSON.stringify(opcionesRespuestaPorPregunta)).toString("base64") %>';
 
-    // Decodificar datos
     const meses = decodeBase64Json(mesesBase64);
     const dataPorPregunta = decodeBase64Json(dataPorPreguntaBase64);
     const opcionesRespuestaPorPregunta = decodeBase64Json(opcionesRespuestaPorPreguntaBase64);
 
-    // Paleta de colores para los datasets
     const colores = [
       'rgba(54, 162, 235, 0.7)',
       'rgba(255, 99, 132, 0.7)',
@@ -104,7 +131,6 @@
       'rgba(255, 159, 64, 0.7)'
     ];
 
-    // Función para calcular porcentaje
     function calcularPorcentajes(data) {
       return data.map(mesData => {
         const total = Object.values(mesData).reduce((a,b) => a + b, 0);
@@ -116,13 +142,11 @@
       });
     }
 
-    // Crear gráficos por pregunta
     Object.keys(dataPorPregunta).forEach((pregunta, idx) => {
       const ctx = document.getElementById('chart-' + pregunta).getContext('2d');
       const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
       const porcentajes = calcularPorcentajes(mesesData);
 
-      // Construir datasets para cada opción
       const opciones = opcionesRespuestaPorPregunta[pregunta];
       const datasets = opciones.map((opcion, i) => {
         return {
@@ -144,7 +168,7 @@
           responsive: true,
           plugins: {
             legend: { position: 'top' },
-            title: { display: true, text: 'Porcentaje de respuestas para ' + pregunta }
+            title: { display: true, text: 'Porcentaje de respuestas para ' + (textosPreguntas[pregunta] || pregunta) }
           },
           scales: {
             y: {
@@ -161,13 +185,11 @@
       });
     });
 
-    // Aplicar ancho a las barras horizontales dinámicamente
     document.addEventListener('DOMContentLoaded', () => {
       const barras = document.querySelectorAll('.bar-fill[data-width]');
       barras.forEach(barra => {
         const width = barra.getAttribute('data-width');
         barra.style.width = width;
-        // Aplicar también como variable CSS para compatibilidad
         barra.style.setProperty('--width', width);
       });
     });
