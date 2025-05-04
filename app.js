@@ -6,6 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -32,6 +33,13 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production'
   }
 }));
+
+app.use(flash());
+
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

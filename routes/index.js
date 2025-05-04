@@ -79,7 +79,7 @@ function checkAdminAuth(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Encuesta' });
+  res.render('index', { title: 'Encuesta', success_msg: req.flash('success_msg') });
 });
 
 const loginLimiter = rateLimit({
@@ -138,7 +138,8 @@ router.post('/submit', function(req, res, next) {
       if (err) {
         return next(err);
       }
-      res.redirect('/resultados');
+      req.flash('success_msg', 'Gracias por su apoyo y participación! ✈️🌍');
+      res.redirect('/');
     }
   );
 

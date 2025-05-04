@@ -17,6 +17,7 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "puppeteer": "^24.7.2",
+    "connect-flash": "^0.1.1",
     "sqlite3": "^5.1.7"
   }
 }
