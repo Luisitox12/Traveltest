@@ -6,12 +6,10 @@
   <title><%= title %></title>
   <link rel="stylesheet" href="http://localhost:3000/stylesheets/style.css" />
   <link rel="stylesheet" href="http://localhost:3000/stylesheets/barras.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
   <% 
-    // Mapeo de preguntas a sus textos extraídos del formulario
     const textosPreguntas = {
       pregunta1: "1. ¿Cómo califica su experiencia, en general, en el FAM TRIP a Barquisimeto?",
       pregunta2: "2. ¿Le gustaría participar nuevamente en un FAM TRIP organizado por el departamento organizador?",
@@ -58,16 +56,6 @@
     <header class="header">
       <h1 class="text-center">Resultados de la Encuesta</h1>
     </header>
-    <hr />
-    <section>
-      <h3>Porcentaje de respuestas por pregunta y mes</h3>
-      <% Object.keys(dataPorPregunta).forEach(function(pregunta) { %>
-        <div class="chart-container">
-          <h4><%= textosPreguntas[pregunta] || pregunta %></h4>
-          <canvas id="chart-<%= pregunta %>" width="900" height="300"></canvas>
-        </div>
-      <% }); %>
-    </section>
     <hr />
     <section class="bars-container">
       <h3>Barras con porcentaje por pregunta y opción</h3>
@@ -120,70 +108,6 @@
     const meses = decodeBase64Json(mesesBase64);
     const dataPorPregunta = decodeBase64Json(dataPorPreguntaBase64);
     const opcionesRespuestaPorPregunta = decodeBase64Json(opcionesRespuestaPorPreguntaBase64);
-
-    const colores = [
-      'rgba(54, 162, 235, 0.7)',
-      'rgba(255, 99, 132, 0.7)',
-      'rgba(201, 203, 207, 0.7)',
-      'rgba(255, 206, 86, 0.7)',
-      'rgba(75, 192, 192, 0.7)',
-      'rgba(153, 102, 255, 0.7)',
-      'rgba(255, 159, 64, 0.7)'
-    ];
-
-    function calcularPorcentajes(data) {
-      return data.map(mesData => {
-        const total = Object.values(mesData).reduce((a,b) => a + b, 0);
-        const porcentajes = {};
-        for (const key in mesData) {
-          porcentajes[key] = total ? (mesData[key] / total * 100).toFixed(2) : 0;
-        }
-        return porcentajes;
-      });
-    }
-
-    Object.keys(dataPorPregunta).forEach((pregunta, idx) => {
-      const ctx = document.getElementById('chart-' + pregunta).getContext('2d');
-      const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
-      const porcentajes = calcularPorcentajes(mesesData);
-
-      const opciones = opcionesRespuestaPorPregunta[pregunta];
-      const datasets = opciones.map((opcion, i) => {
-        return {
-          label: opcion,
-          data: porcentajes.map(p => parseFloat(p[opcion]) || 0),
-          backgroundColor: colores[i % colores.length],
-          borderColor: colores[i % colores.length].replace('0.7', '1'),
-          borderWidth: 1
-        };
-      });
-
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: meses,
-          datasets: datasets
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' },
-            title: { display: true, text: 'Porcentaje de respuestas para ' + (textosPreguntas[pregunta] || pregunta) }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              max: 100,
-              ticks: {
-                callback: function(value) {
-                  return value + '%';
-                }
-              }
-            }
-          }
-        }
-      });
-    });
 
     document.addEventListener('DOMContentLoaded', () => {
       const barras = document.querySelectorAll('.bar-fill[data-width]');
