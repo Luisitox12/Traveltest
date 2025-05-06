@@ -138,8 +138,7 @@ router.post('/submit', function(req, res, next) {
       if (err) {
         return next(err);
       }
-      req.flash('success_msg', 'Gracias por su apoyo y participación! ✈️🌍');
-      res.redirect('/');
+      res.render('confirmacion');
     }
   );
 

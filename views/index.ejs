@@ -14,6 +14,13 @@
     <p class="text-center description">Este formato está diseñado con el fin de evaluar la experiencia de los participantes y recopilar sugerencias para futuros viajes:</p>
   </header>
   <hr><br />
+
+  <% if (success_msg && success_msg.length > 0) { %>
+    <div class="alert alert-success">
+      <%= success_msg %>
+    </div>
+  <% } %>
+
   <form method="POST" action="/submit">
     <section>
       <h3>1. Evaluación general del viaje</h3>
