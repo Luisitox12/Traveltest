@@ -11,7 +11,6 @@
 <div class="container">
   <header class="header">
     <h1 class="text-center">Encuesta de evaluación del FAM TRIP a Barquisimeto 2025</h1>
-    <p class="text-center description">Este formato está diseñado con el fin de evaluar la experiencia de los participantes y recopilar sugerencias para futuros viajes:</p>
   </header>
   <hr><br />
 
@@ -60,7 +59,8 @@
       <h3>2. Opinión sobre los destinos visitados</h3>
       <div class="form-group">
         <p>¿Qué lugares visitados en Barquisimeto, le pareció más interesante o relevante?</p>
-        <select class="form-control" id="pregunta5" name="pregunta5" multiple size="8" required>
+        <select class="form-control" id="pregunta5" name="pregunta5" required>
+          <option value="">Seleccione</option>
           <option value="Restaurante Suelo Larense">Restaurante Suelo Larense</option>
           <option value="Obelisco de Barquisimeto">Obelisco de Barquisimeto</option>
           <option value="Parque Ayacucho">Parque Ayacucho</option>
@@ -68,9 +68,7 @@
           <option value="Santa Rosa">Santa Rosa</option>
           <option value="Arena Parque Acuático">Arena Parque Acuático</option>
           <option value="Flor de Venezuela">Flor de Venezuela</option>
-          <option value="Otro">Otro (especifique en comentarios)</option>
         </select>
-        <textarea class="form-control" name="pregunta5_otro" placeholder="Si seleccionó 'Otro', especifique aquí"></textarea>
       </div>
       <div class="form-group">
         <p>¿Considera que la duración en cada destino fue adecuada?</p>
@@ -133,7 +131,14 @@
       <h3>4. Actividades realizadas</h3>
       <div class="form-group">
         <p>¿Qué actividades le resultaron más significativas durante el FAM TRIP?</p>
-        <textarea class="form-control" name="pregunta13" placeholder="Ejemplos: Visitas culturales, recorridos naturales, actividades recreativas" required></textarea>
+        <select class="form-control" id="pregunta13" name="pregunta13" required>
+          <option value="">Seleccione</option>
+          <option value="Visitas culturales">Visitas culturales</option>
+          <option value="Recorridos naturales">Recorridos naturales</option>
+          <option value="Actividades recreativas">Actividades recreativas</option>
+          <option value="Gastronomía">Gastronomía</option>
+          <option value="Otra">Otra</option>
+        </select>
       </div>
       <div class="form-group">
         <p>¿Considera que hubo un equilibrio adecuado entre actividades recreativas, culturales y gastronómicas?</p>
@@ -143,11 +148,23 @@
       </div>
       <div class="form-group">
         <p>¿Alguna actividad le pareció innecesaria o poco interesante?</p>
-        <textarea class="form-control" name="pregunta15" placeholder="Respuesta abierta" required></textarea>
+        <select class="form-control" id="pregunta15" name="pregunta15" required>
+          <option value="">Seleccione</option>
+          <option value="Sí">Sí</option>
+          <option value="No">No</option>
+          <option value="No aplica">No aplica</option>
+        </select>
       </div>
       <div class="form-group">
         <p>¿Qué actividades adicionales le gustaría que se incluyan en futuros viajes?</p>
-        <textarea class="form-control" name="pregunta16" placeholder="Respuesta abierta" required></textarea>
+        <select class="form-control" id="pregunta16" name="pregunta16" required>
+          <option value="">Seleccione</option>
+          <option value="Visitas culturales">Visitas culturales</option>
+          <option value="Recorridos naturales">Recorridos naturales</option>
+          <option value="Actividades recreativas">Actividades recreativas</option>
+          <option value="Gastronomía">Gastronomía</option>
+          <option value="Otra">Otra</option>
+        </select>
       </div>
     </section>
     <hr />
@@ -189,13 +206,14 @@
       </div>
       <div class="form-group">
         <p>¿Qué elementos del FAM TRIP considera más relevante para su negocio o actividad profesional?</p>
-        <textarea class="form-control" name="pregunta21" placeholder="Respuesta abierta" required></textarea>
-      </div>
-      <div class="form-group">
-        <p>¿Recomienda este tipo de experiencia a otros colegas o socios comerciales?</p>
-        <label><input type="radio" name="pregunta22" value="Sí" required> Sí</label>
-        <label><input type="radio" name="pregunta22" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta22_comentarios" placeholder="Explique (opcional)"></textarea>
+        <select class="form-control" id="pregunta21" name="pregunta21" required>
+          <option value="">Seleccione</option>
+          <option value="Oportunidades comerciales">Oportunidades comerciales</option>
+          <option value="Alianzas estratégicas">Alianzas estratégicas</option>
+          <option value="Networking">Networking</option>
+          <option value="Conocimiento del destino">Conocimiento del destino</option>
+          <option value="Otra">Otra</option>
+        </select>
       </div>
     </section>
     <hr />
@@ -242,8 +260,8 @@
   <footer class="container">
     <p>Todos los derechos reservados para ESE Hospital San Rafael de Girardota.</p>
   </footer>
-  <div class="admin-login">
-    <a href="/admin/login" class="submit-button">Login Administrador</a>
+  <div class="admin-login" style="text-align: center; margin-top: 20px;">
+    <button onclick="window.location.href='/admin/login'" class="submit-button">Iniciar sesión como administrador</button>
   </div>
   <script>
     // Establecer fecha actual automáticamente en el campo fechaActual
