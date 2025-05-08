@@ -22,6 +22,18 @@
 
   <form method="POST" action="/submit">
     <section>
+      <h3>Información personal</h3>
+      <div class="form-group">
+        <label for="nombreCompleto">Nombre Completo:</label>
+        <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="edadEncuestado">Edad:</label>
+        <input type="number" id="edadEncuestado" name="edadEncuestado" class="form-control" min="0" required />
+      </div>
+    </section>
+    <hr />
+    <section>
       <h3>1. Evaluación general del viaje</h3>
       <div class="form-group">
         <p>¿Cómo califica su experiencia, en general, en el FAM TRIP a Barquisimeto?</p>
