@@ -143,5 +143,83 @@
     document.addEventListener('DOMContentLoaded', aplicarAnchoBarras);
     window.addEventListener('beforeprint', aplicarAnchoBarras);
   </script>
+
+  <style>
+    #comentarios-section {
+      margin: 2rem auto;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      border-radius: 8px;
+      display: none;
+    }
+    #comentarios-toggle {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background-color: var(--color-blue);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .comentario-encuestado {
+      border-bottom: 1px solid #ccc;
+      padding: 0.5rem 0;
+    }
+    .comentario-encuestado:last-child {
+      border-bottom: none;
+    }
+    .comentario-encuestado h5 {
+      margin: 0 0 0.5rem 0;
+      font-weight: 600;
+      color: var(--color-grey);
+    }
+    .comentario-encuestado p {
+      margin: 0.25rem 0;
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <button id="comentarios-toggle">Mostrar/Ocultar Sugerencias Opcionales</button>
+  <section id="comentarios-section">
+    <h3>Sugerencias y Comentarios Opcionales por Encuestado</h3>
+    <% if (comentarios && comentarios.length > 0) { %>
+      <% comentarios.forEach(function(c) { %>
+        <div class="comentario-encuestado">
+          <h5><%= c.nombreCompleto || 'Encuestado Anónimo' %> - <small><%= new Date(c.fechaRegistro).toLocaleDateString() %></small></h5>
+          <% if (c.pregunta2_comentarios) { %><p><strong>Pregunta 2:</strong> <%= c.pregunta2_comentarios %></p><% } %>
+          <% if (c.pregunta6_comentarios) { %><p><strong>Pregunta 6:</strong> <%= c.pregunta6_comentarios %></p><% } %>
+          <% if (c.pregunta8_comentarios) { %><p><strong>Pregunta 8:</strong> <%= c.pregunta8_comentarios %></p><% } %>
+          <% if (c.pregunta10_comentarios) { %><p><strong>Pregunta 10:</strong> <%= c.pregunta10_comentarios %></p><% } %>
+          <% if (c.pregunta11_comentarios) { %><p><strong>Pregunta 11:</strong> <%= c.pregunta11_comentarios %></p><% } %>
+          <% if (c.pregunta12_comentarios) { %><p><strong>Pregunta 12:</strong> <%= c.pregunta12_comentarios %></p><% } %>
+          <% if (c.pregunta14_comentarios) { %><p><strong>Pregunta 14:</strong> <%= c.pregunta14_comentarios %></p><% } %>
+          <% if (c.pregunta17_comentarios) { %><p><strong>Pregunta 17:</strong> <%= c.pregunta17_comentarios %></p><% } %>
+          <% if (c.pregunta18_comentarios) { %><p><strong>Pregunta 18:</strong> <%= c.pregunta18_comentarios %></p><% } %>
+          <% if (c.pregunta19_comentarios) { %><p><strong>Pregunta 19:</strong> <%= c.pregunta19_comentarios %></p><% } %>
+          <% if (c.pregunta20_comentarios) { %><p><strong>Pregunta 20:</strong> <%= c.pregunta20_comentarios %></p><% } %>
+          <% if (c.pregunta23_comentarios) { %><p><strong>Pregunta 23:</strong> <%= c.pregunta23_comentarios %></p><% } %>
+          <% if (c.pregunta28_comentarios) { %><p><strong>Pregunta 28:</strong> <%= c.pregunta28_comentarios %></p><% } %>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No hay sugerencias o comentarios disponibles.</p>
+    <% } %>
+  </section>
+
+  <script>
+    document.getElementById('comentarios-toggle').addEventListener('click', function() {
+      const section = document.getElementById('comentarios-section');
+      if (section.style.display === 'none' || section.style.display === '') {
+        section.style.display = 'block';
+        this.textContent = 'Ocultar Sugerencias Opcionales';
+      } else {
+        section.style.display = 'none';
+        this.textContent = 'Mostrar Sugerencias Opcionales';
+      }
+    });
+  </script>
 </body>
 </html>

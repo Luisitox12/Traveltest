@@ -288,6 +288,27 @@ function renderResultados(req, res, next) {
     ORDER BY mes ASC
   `;
 
+  // Nueva consulta para obtener comentarios opcionales y nombre completo
+  const comentariosQuery = `
+    SELECT 
+      nombreCompleto,
+      fechaRegistro,
+      pregunta2_comentarios,
+      pregunta6_comentarios,
+      pregunta8_comentarios,
+      pregunta10_comentarios,
+      pregunta11_comentarios,
+      pregunta12_comentarios,
+      pregunta14_comentarios,
+      pregunta17_comentarios,
+      pregunta18_comentarios,
+      pregunta19_comentarios,
+      pregunta20_comentarios,
+      pregunta23_comentarios
+    FROM respuestas
+    ORDER BY fechaRegistro DESC
+  `;
+
   db.all(query, [], (err, rows) => {
     if (err) {
       return next(err);
@@ -337,18 +358,23 @@ function renderResultados(req, res, next) {
         totalRespuestasPorMes[row.mes] = row.total;
       });
 
-      // Convertir Sets a arrays para la vista
-      const opcionesRespuestaPorPreguntaArray = {};
-      Object.keys(opcionesRespuestaPorPregunta).forEach(pregunta => {
-        opcionesRespuestaPorPreguntaArray[pregunta] = Array.from(opcionesRespuestaPorPregunta[pregunta]);
-      });
+      // Obtener comentarios opcionales
+      db.all(comentariosQuery, [], (err3, comentariosRows) => {
+        if (err3) {
+          return next(err3);
+        }
 
-      res.render('resultados', {
-        title: 'Resultados de la Encuesta',
-        dataPorPregunta,
-        opcionesRespuestaPorPregunta: opcionesRespuestaPorPreguntaArray,
-        meses,
-        totalRespuestasPorMes
+        res.render('resultados', {
+          title: 'Resultados de la Encuesta',
+          dataPorPregunta,
+          opcionesRespuestaPorPregunta: Object.keys(opcionesRespuestaPorPregunta).reduce((acc, key) => {
+            acc[key] = Array.from(opcionesRespuestaPorPregunta[key]);
+            return acc;
+          }, {}),
+          meses,
+          totalRespuestasPorMes,
+          comentarios: comentariosRows
+        });
       });
     });
   });
