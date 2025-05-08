@@ -66,6 +66,14 @@
       <h1 class="text-center">Resultados de la Encuesta</h1>
     </header>
     <hr />
+    <section>
+      <label for="mesSelector">Seleccione el mes:</label>
+      <select id="mesSelector" class="form-control" style="max-width: 200px; margin-bottom: 1rem;">
+        <% meses.forEach(function(mes) { %>
+          <option value="<%= mes %>"><%= mes %></option>
+        <% }); %>
+      </select>
+    </section>
     <section class="bars-container">
       <h3>Barras con porcentaje por pregunta y opción</h3>
       <% 
@@ -74,20 +82,22 @@
       %>
         <h4><%= textosPreguntas[pregunta] || pregunta %></h4>
         <% 
-          const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
-          const porcentajes = calcularPorcentajes(mesesData);
           const opciones = opcionesRespuestaPorPregunta[pregunta];
           const promedioPorOpcion = {};
           opciones.forEach(opcion => {
             let suma = 0;
-            porcentajes.forEach(p => {
-              suma += parseFloat(p[opcion]) || 0;
+            let count = 0;
+            meses.forEach(mes => {
+              if (dataPorPregunta[pregunta][mes]) {
+                suma += parseFloat(dataPorPregunta[pregunta][mes][opcion]) || 0;
+                count++;
+              }
             });
-            promedioPorOpcion[opcion] = (suma / porcentajes.length).toFixed(2);
+            promedioPorOpcion[opcion] = count ? (suma / count).toFixed(2) : 0;
           });
         %>
         <% opciones.forEach(function(opcion) { %>
-          <div class="bar-wrapper">
+          <div class="bar-wrapper" data-pregunta="<%= pregunta %>" data-opcion="<%= opcion %>">
             <div class="bar-label"><%= opcion %></div>
             <div class="bar">
               <div class="bar-fill" data-width="<%= promedioPorOpcion[opcion] + '%' %>">
@@ -187,7 +197,7 @@
     <h3>Sugerencias y Comentarios Opcionales por Encuestado</h3>
     <% if (comentarios && comentarios.length > 0) { %>
       <% comentarios.forEach(function(c) { %>
-        <div class="comentario-encuestado">
+        <div class="comentario-encuestado" data-fecha="<%= new Date(c.fechaRegistro).toISOString() %>">
           <h5><%= c.nombreCompleto || 'Encuestado Anónimo' %> - <small><%= new Date(c.fechaRegistro).toLocaleDateString() %></small></h5>
           <% if (c.pregunta2_comentarios) { %><p><strong>Pregunta 2:</strong> <%= c.pregunta2_comentarios %></p><% } %>
           <% if (c.pregunta6_comentarios) { %><p><strong>Pregunta 6:</strong> <%= c.pregunta6_comentarios %></p><% } %>
@@ -218,6 +228,49 @@
       } else {
         section.style.display = 'none';
         this.textContent = 'Mostrar Sugerencias Opcionales';
+      }
+    });
+
+    // Filtrar resultados por mes
+    document.getElementById('mesSelector').addEventListener('change', function() {
+      const mesSeleccionado = this.value;
+
+      // Filtrar barras
+      const barras = document.querySelectorAll('.bar-wrapper');
+      barras.forEach(barra => {
+        const pregunta = barra.getAttribute('data-pregunta');
+        const opcion = barra.getAttribute('data-opcion');
+        const dataMes = dataPorPregunta[pregunta] && dataPorPregunta[pregunta][mesSeleccionado];
+        if (dataMes && dataMes[opcion] !== undefined) {
+          const total = Object.values(dataMes).reduce((a,b) => a + b, 0);
+          const porcentaje = total ? (dataMes[opcion] / total * 100).toFixed(2) : 0;
+          barra.querySelector('.bar-fill').style.width = porcentaje + '%';
+          barra.querySelector('.bar-fill').textContent = porcentaje + '%';
+          barra.style.display = 'block';
+        } else {
+          barra.style.display = 'none';
+        }
+      });
+
+      // Filtrar comentarios
+      const comentarios = document.querySelectorAll('.comentario-encuestado');
+      comentarios.forEach(comentario => {
+        const fechaRegistroISO = comentario.getAttribute('data-fecha');
+        const mesComentario = fechaRegistroISO ? fechaRegistroISO.slice(0,7) : '';
+        if (mesComentario === mesSeleccionado) {
+          comentario.style.display = 'block';
+        } else {
+          comentario.style.display = 'none';
+        }
+      });
+    });
+
+    // Seleccionar el mes más reciente por defecto
+    document.addEventListener('DOMContentLoaded', () => {
+      const mesSelector = document.getElementById('mesSelector');
+      if (mesSelector.options.length > 0) {
+        mesSelector.value = mesSelector.options[mesSelector.options.length - 1].value;
+        mesSelector.dispatchEvent(new Event('change'));
       }
     });
   </script>
