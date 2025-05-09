@@ -334,20 +334,8 @@ function renderResultados(req, res, next) {
       if (!dataPorPregunta[row.pregunta][row.mes]) {
         dataPorPregunta[row.pregunta][row.mes] = {};
       }
-      // Normalizar opciones para pregunta2 a "Sí" o "No"
+      // No normalizar opciones para pregunta2, tratar igual que otras preguntas
       let respuestaNormalizada = row.respuesta;
-      if (row.pregunta === 'pregunta2') {
-        if (typeof row.respuesta === 'string') {
-          const val = row.respuesta.trim().toLowerCase();
-          if (val === 'sí' || val === 'si') {
-            respuestaNormalizada = 'Sí';
-          } else if (val === 'no') {
-            respuestaNormalizada = 'No';
-          } else {
-            respuestaNormalizada = row.respuesta;
-          }
-        }
-      }
       dataPorPregunta[row.pregunta][row.mes][respuestaNormalizada] = row.total;
       opcionesRespuestaPorPregunta[row.pregunta].add(respuestaNormalizada);
     });
@@ -704,11 +692,8 @@ function renderResultados(req, res, next) {
       if (!dataPorPregunta[row.pregunta][row.mes]) {
         dataPorPregunta[row.pregunta][row.mes] = {};
       }
-      // Normalizar respuesta para pregunta2 para evitar problemas de espacios o mayúsculas
+      // No normalizar opciones para pregunta2, tratar igual que otras preguntas
       let respuestaNormalizada = row.respuesta;
-      if (row.pregunta === 'pregunta2' && typeof row.respuesta === 'string') {
-        respuestaNormalizada = row.respuesta.trim().toLowerCase();
-      }
       dataPorPregunta[row.pregunta][row.mes][respuestaNormalizada] = row.total;
       opcionesRespuestaPorPregunta[row.pregunta].add(respuestaNormalizada);
     });
