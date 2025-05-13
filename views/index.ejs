@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><%= title %></title>
+  <!-- Agregar Bootstrap CSS desde CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="stylesheets/style.css" />
 </head>
 <body>
@@ -23,12 +25,12 @@
   <form method="POST" action="/submit">
     <section>
       <h3>Información personal</h3>
-      <div class="form-group">
-        <label for="nombreCompleto">Nombre Completo:</label>
+      <div class="mb-3">
+        <label for="nombreCompleto" class="form-label">Nombre Completo:</label>
         <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required />
       </div>
-      <div class="form-group">
-        <label for="edadEncuestado">Edad:</label>
+      <div class="mb-3">
+        <label for="edadEncuestado" class="form-label">Edad:</label>
         <input type="number" id="edadEncuestado" name="edadEncuestado" class="form-control" min="0" required />
       </div>
       <input type="hidden" id="fechaActual" name="fechaActual" />
@@ -36,9 +38,9 @@
     <hr />
     <section>
       <h3>1. Evaluación general del viaje</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Cómo califica su experiencia, en general, en el FAM TRIP a Barquisimeto?</p>
-        <select class="form-control" id="pregunta1" name="pregunta1" required>
+        <select class="form-select" id="pregunta1" name="pregunta1" required>
           <option value="">Seleccione</option>
           <option value="Excelente">Excelente</option>
           <option value="Buena">Buena</option>
@@ -46,15 +48,21 @@
           <option value="Mala">Mala</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Le gustaría participar nuevamente en un FAM TRIP organizado por el departamento organizador?</p>
-        <label><input type="radio" name="pregunta2" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta2" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta2_comentarios" placeholder="Comentarios (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta2" id="pregunta2Si" value="Si" required>
+          <label class="form-check-label" for="pregunta2Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta2" id="pregunta2No" value="No" required>
+          <label class="form-check-label" for="pregunta2No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta2_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué aspectos considera que definieron el éxito del FAM TRIP?</p>
-        <select class="form-control" name="pregunta3" required>
+        <select class="form-select" name="pregunta3" required>
           <option value="">Seleccione</option>
           <option value="Organizacion">Organización</option>
           <option value="Destinos">Destinos</option>
@@ -63,9 +71,9 @@
           <option value="Otro">Otro</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Cómo califica la relación calidad/precio del FAM TRIP?</p>
-        <select class="form-control" id="pregunta4" name="pregunta4" required>
+        <select class="form-select" id="pregunta4" name="pregunta4" required>
           <option value="">Seleccione</option>
           <option value="Excelente">Excelente</option>
           <option value="Buena">Buena</option>
@@ -77,9 +85,9 @@
     <hr />
     <section>
       <h3>2. Opinión sobre los destinos visitados</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué lugares visitados en Barquisimeto, le pareció más interesante o relevante?</p>
-        <select class="form-control" id="pregunta5" name="pregunta5" required>
+        <select class="form-select" id="pregunta5" name="pregunta5" required>
           <option value="">Seleccione</option>
           <option value="Restaurante Suelo Larense">Restaurante Suelo Larense</option>
           <option value="Obelisco de Barquisimeto">Obelisco de Barquisimeto</option>
@@ -90,29 +98,41 @@
           <option value="Flor de Venezuela">Flor de Venezuela</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Considera que la duración en cada destino fue adecuada?</p>
-        <label><input type="radio" name="pregunta6" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta6" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta6_comentarios" placeholder="Comentarios (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta6" id="pregunta6Si" value="Si" required>
+          <label class="form-check-label" for="pregunta6Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta6" id="pregunta6No" value="No" required>
+          <label class="form-check-label" for="pregunta6No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta6_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué lugares deben ser incluidos en el itinerario que le hubiera gustado visitar?</p>
         <textarea class="form-control" name="pregunta7" placeholder="Respuesta abierta" required></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿El balance entre turismo cultural, recreativo y gastronómico fue adecuado?</p>
-        <label><input type="radio" name="pregunta8" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta8" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta8_comentarios" placeholder="Detalles (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta8" id="pregunta8Si" value="Si" required>
+          <label class="form-check-label" for="pregunta8Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta8" id="pregunta8No" value="No" required>
+          <label class="form-check-label" for="pregunta8No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta8_comentarios" placeholder="Detalles (opcional)"></textarea>
       </div>
     </section>
     <hr />
     <section>
       <h3>3. Organización y logística</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Cómo evalua la puntualidad y coordinación de los horarios del FAM TRIP?</p>
-        <select class="form-control" id="pregunta9" name="pregunta9" required>
+        <select class="form-select" id="pregunta9" name="pregunta9" required>
           <option value="">Seleccione</option>
           <option value="Excelente">1 - Excelente</option>
           <option value="Buena">2 - Buena</option>
@@ -121,9 +141,9 @@
           <option value="Muy mala">5 - Muy mala</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿El transporte utilizado durante el FAM TRIP cumplió con sus expectativas de comodidad y eficiencia?</p>
-        <select class="form-control" id="pregunta10" name="pregunta10" required>
+        <select class="form-select" id="pregunta10" name="pregunta10" required>
           <option value="">Seleccione</option>
           <option value="Excelente">1 - Excelente</option>
           <option value="Buena">2 - Buena</option>
@@ -131,27 +151,39 @@
           <option value="Mala">4 - Mala</option>
           <option value="Muy mala">5 - Muy mala</option>
         </select>
-        <textarea class="form-control" name="pregunta10_comentarios" placeholder="Comentarios (opcional)"></textarea>
+        <textarea class="form-control mt-2" name="pregunta10_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Recibió toda la información necesaria sobre el itinerario, destinos y recomendaciones antes del viaje?</p>
-        <label><input type="radio" name="pregunta11" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta11" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta11_comentarios" placeholder="Detalles (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta11" id="pregunta11Si" value="Si" required>
+          <label class="form-check-label" for="pregunta11Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta11" id="pregunta11No" value="No" required>
+          <label class="form-check-label" for="pregunta11No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta11_comentarios" placeholder="Detalles (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Considera que el personal de protocolo estuvo disponible y fue resolutivo?</p>
-        <label><input type="radio" name="pregunta12" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta12" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta12_comentarios" placeholder="Explique (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta12" id="pregunta12Si" value="Si" required>
+          <label class="form-check-label" for="pregunta12Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta12" id="pregunta12No" value="No" required>
+          <label class="form-check-label" for="pregunta12No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta12_comentarios" placeholder="Explique (opcional)"></textarea>
       </div>
     </section>
     <hr />
     <section>
       <h3>4. Actividades realizadas</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué actividades le resultaron más significativas durante el FAM TRIP?</p>
-        <select class="form-control" id="pregunta13" name="pregunta13" required>
+        <select class="form-select" id="pregunta13" name="pregunta13" required>
           <option value="">Seleccione</option>
           <option value="Visitas culturales">Visitas culturales</option>
           <option value="Recorridos naturales">Recorridos naturales</option>
@@ -160,24 +192,30 @@
           <option value="Otra">Otra</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Considera que hubo un equilibrio adecuado entre actividades recreativas, culturales y gastronómicas?</p>
-        <label><input type="radio" name="pregunta14" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta14" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta14_comentarios" placeholder="Comentarios (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta14" id="pregunta14Si" value="Si" required>
+          <label class="form-check-label" for="pregunta14Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta14" id="pregunta14No" value="No" required>
+          <label class="form-check-label" for="pregunta14No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta14_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Alguna actividad le pareció innecesaria o poco interesante?</p>
-        <select class="form-control" id="pregunta15" name="pregunta15" required>
+        <select class="form-select" id="pregunta15" name="pregunta15" required>
           <option value="">Seleccione</option>
           <option value="Si">Sí</option>
           <option value="No">No</option>
           <option value="No aplica">No aplica</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué actividades adicionales le gustaría que se incluyan en futuros viajes?</p>
-        <select class="form-control" id="pregunta16" name="pregunta16" required>
+        <select class="form-select" id="pregunta16" name="pregunta16" required>
           <option value="">Seleccione</option>
           <option value="Visitas culturales">Visitas culturales</option>
           <option value="Recorridos naturales">Recorridos naturales</option>
@@ -190,9 +228,9 @@
     <hr />
     <section>
       <h3>5. Satisfacción con los servicios</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Cómo califica la calidad de los hoteles y hospedajes seleccionados?</p>
-        <select class="form-control" id="pregunta17" name="pregunta17" required>
+        <select class="form-select" id="pregunta17" name="pregunta17" required>
           <option value="">Seleccione</option>
           <option value="Excelente">1 - Excelente</option>
           <option value="Buena">2 - Buena</option>
@@ -200,33 +238,51 @@
           <option value="Mala">4 - Mala</option>
           <option value="Muy mala">5 - Muy mala</option>
         </select>
-        <textarea class="form-control" name="pregunta17_comentarios" placeholder="Comentarios (opcional)"></textarea>
+        <textarea class="form-control mt-2" name="pregunta17_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Considera que recibió una atención adecuada por parte del equipo organizador durante el viaje?</p>
-        <label><input type="radio" name="pregunta18" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta18" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta18_comentarios" placeholder="Detalles (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta18" id="pregunta18Si" value="Si" required>
+          <label class="form-check-label" for="pregunta18Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta18" id="pregunta18No" value="No" required>
+          <label class="form-check-label" for="pregunta18No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta18_comentarios" placeholder="Detalles (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Hubo algún aspecto de los servicios ofrecidos que no cumplió con sus expectativas?</p>
-        <label><input type="radio" name="pregunta19" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta19" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta19_comentarios" placeholder="Detalles (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta19" id="pregunta19Si" value="Si" required>
+          <label class="form-check-label" for="pregunta19Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta19" id="pregunta19No" value="No" required>
+          <label class="form-check-label" for="pregunta19No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta19_comentarios" placeholder="Detalles (opcional)"></textarea>
       </div>
     </section>
     <hr />
     <section>
       <h3>6. Sugerencias y expectativas</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿El FAM TRIP le ayudó a identificar oportunidades comerciales o alianzas estratégicas?</p>
-        <label><input type="radio" name="pregunta20" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta20" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta20_comentarios" placeholder="Explique (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta20" id="pregunta20Si" value="Si" required>
+          <label class="form-check-label" for="pregunta20Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta20" id="pregunta20No" value="No" required>
+          <label class="form-check-label" for="pregunta20No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta20_comentarios" placeholder="Explique (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué elementos del FAM TRIP considera más relevante para su negocio o actividad profesional?</p>
-        <select class="form-control" id="pregunta21" name="pregunta21" required>
+        <select class="form-select" id="pregunta21" name="pregunta21" required>
           <option value="">Seleccione</option>
           <option value="Oportunidades comerciales">Oportunidades comerciales</option>
           <option value="Alianzas estrategicas">Alianzas estratégicas</option>
@@ -235,25 +291,37 @@
           <option value="Otra">Otra</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Recomienda este tipo de experiencia a otros colegas o socios comerciales?</p>
-        <label><input type="radio" name="pregunta22" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta22" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta22_comentarios" placeholder="Explique (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta22" id="pregunta22Si" value="Si" required>
+          <label class="form-check-label" for="pregunta22Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta22" id="pregunta22No" value="No" required>
+          <label class="form-check-label" for="pregunta22No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta22_comentarios" placeholder="Explique (opcional)"></textarea>
       </div>
     </section>
     <hr />
     <section>
       <h3>7. Valoración del destino Barquisimeto</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Cree que Barquisimeto tiene potencial para posicionarse como un destino destacado en el turismo nacional e internacional?</p>
-        <label><input type="radio" name="pregunta23" value="Si" required> Sí</label>
-        <label><input type="radio" name="pregunta23" value="No" required> No</label>
-        <textarea class="form-control" name="pregunta23_comentarios" placeholder="Sugerencias (opcional)"></textarea>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta23" id="pregunta23Si" value="Si" required>
+          <label class="form-check-label" for="pregunta23Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta23" id="pregunta23No" value="No" required>
+          <label class="form-check-label" for="pregunta23No">No</label>
+        </div>
+        <textarea class="form-control mt-2" name="pregunta23_comentarios" placeholder="Sugerencias (opcional)"></textarea>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué aspectos del destino le sorprendieron positivamente?</p>
-        <select class="form-control" name="pregunta24" required>
+        <select class="form-select" name="pregunta24" required>
           <option value="">Seleccione</option>
           <option value="Cultura">Cultura</option>
           <option value="Gastronomia">Gastronomía</option>
@@ -262,9 +330,9 @@
           <option value="Otro">Otro</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué aspectos del destino considera que pueden mejorarse para futuras experiencias turísticas?</p>
-        <select class="form-control" name="pregunta25" required>
+        <select class="form-select" name="pregunta25" required>
           <option value="">Seleccione</option>
           <option value="Infraestructura">Infraestructura</option>
           <option value="Servicios">Servicios</option>
@@ -277,9 +345,9 @@
     <hr />
     <section>
       <h3>8. Sugerencias para futuros FAM TRIP</h3>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué destinos o regiones recomienda visitar en próximos FAM TRIP organizados por el departamento organizador?</p>
-        <select class="form-control" name="pregunta26" required>
+        <select class="form-select" name="pregunta26" required>
           <option value="">Seleccione</option>
           <option value="Merida">Mérida</option>
           <option value="Los Roques">Los Roques</option>
@@ -293,9 +361,9 @@
           <option value="Otro">Otro</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué valor agregado le gustaría que se incluya en futuros itinerarios?</p>
-        <select class="form-control" name="pregunta27" required>
+        <select class="form-select" name="pregunta27" required>
           <option value="">Seleccione</option>
           <option value="Actividades culturales">Actividades culturales</option>
           <option value="Actividades recreativas">Actividades recreativas</option>
@@ -305,9 +373,9 @@
           <option value="Otro">Otro</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <p>¿Qué otras recomendaciones o sugerencias, en forma general, desea compartir con el equipo organizador?</p>
-        <select class="form-control" name="pregunta28" required>
+        <select class="form-select" name="pregunta28" required>
           <option value="">Seleccione</option>
           <option value="Mejorar organizacion">Mejorar organización</option>
           <option value="Mas variedad de destinos">Más variedad de destinos</option>
@@ -318,16 +386,15 @@
     </section>
     <hr />
     <section>
-      <button type="submit" class="submit-button" id="saveForm">Guardar Encuesta</button>
-      <button type="reset" class="submit-button" id="clearForm">Limpiar formulario</button>
+      <button type="submit" class="btn btn-primary" id="saveForm">Guardar Encuesta</button>
+      <button type="reset" class="btn btn-secondary" id="clearForm">Limpiar formulario</button>
     </section>
   </form>
 </div>
   <footer class="container">
-    <p>Todos los derechos reservados para ESE Hospital San Rafael de Girardota.</p>
   </footer>
-  <div class="admin-login" style="text-align: center; margin-top: 20px;">
-    <button onclick="window.location.href='/admin/login'" class="submit-button">Iniciar sesión como administrador</button>
+  <div class="admin-login text-center mt-4">
+    <button onclick="window.location.href='/admin/login'" class="btn btn-primary">Iniciar sesión como administrador</button>
   </div>
   <script>
     // Establecer fecha actual automáticamente en el campo fechaActual
@@ -337,6 +404,8 @@
       fechaInput.value = hoy;
     });
   </script>
+  <!-- Agregar Bootstrap JS y Popper.js desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
-</create_file>
