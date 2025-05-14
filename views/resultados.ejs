@@ -187,13 +187,23 @@
     window.addEventListener('beforeprint', aplicarAnchoBarras);
   </script>
 
+  <style>
+    #comentarios-preguntas-toggle {
+      display: block;
+      margin: 1rem auto;
+    }
+  </style>
   <button id="comentarios-preguntas-toggle" class="btn btn-info mt-3">Mostrar/Ocultar Comentarios de Preguntas</button>
   <section id="comentarios-preguntas-section" style="display:none; margin-top: 1rem;">
     <h3>Comentarios de Preguntas Disponibles</h3>
     <% if (comentarios && comentarios.length > 0) { %>
       <% comentarios.forEach(function(c) { %>
         <div class="comentario-pregunta" data-fecha="<%= new Date(c.fechaRegistro).toISOString() %>">
-          <h5><%= c.nombreCompleto || 'Encuestado Anónimo' %> - <small><%= new Date(c.fechaRegistro).toLocaleDateString() %></small></h5>
+          <h5>
+            <%= c.nombreCompleto || 'Encuestado Anónimo' %>
+            <% if (c.agenciaParticipante) { %> - <%= c.agenciaParticipante %> <% } %>
+            - <small><%= new Date(c.fechaRegistro).toLocaleDateString() %></small>
+          </h5>
           <% Object.keys(c).forEach(function(key) { 
                if (key.endsWith('_comentarios') && c[key]) { %>
             <p><strong><%= key.replace('_comentarios', '').replace('pregunta', 'Pregunta ') %>:</strong> <%= c[key] %></p>

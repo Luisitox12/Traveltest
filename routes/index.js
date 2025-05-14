@@ -628,6 +628,7 @@ function renderResultados(req, res, next) {
   const comentariosQuery = `
     SELECT 
       nombreCompleto,
+      agenciaParticipante,
       fechaRegistro,
       pregunta4_comentarios,
       pregunta10_comentarios,
