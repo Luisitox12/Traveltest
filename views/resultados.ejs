@@ -8,6 +8,32 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <link rel="stylesheet" href="/stylesheets/barras.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style media="print">
+    .bar-fill {
+      display: block !important;
+      background-color: #0d6efd !important;
+      color: rgb(0, 0, 0) !important;
+      padding: 0.25rem;
+      font-weight: bold;
+    }
+
+    .bar {
+      background-color: #df8405 !important;
+      height: 1.5rem;
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .bar-wrapper {
+      display: block !important;
+      margin-bottom: 0.5rem;
+    }
+
+    body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  </style>
 </head>
 <body>
   <% 
