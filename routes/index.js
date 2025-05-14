@@ -10,7 +10,7 @@ const puppeteer = require('puppeteer');
 const dbPath = path.resolve(__dirname, '../encuesta.db');
 const db = new sqlite3.Database(dbPath);
 
-db.serialize(() => {
+  db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS respuestas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombreCompleto TEXT,
@@ -20,6 +20,7 @@ db.serialize(() => {
     pregunta2 TEXT,
     pregunta3 TEXT,
     pregunta4 TEXT,
+    pregunta4_comentarios TEXT,
     pregunta5 TEXT,
     pregunta5_otro TEXT,
     pregunta6 TEXT,
@@ -48,37 +49,39 @@ db.serialize(() => {
     pregunta24 TEXT,
     pregunta25 TEXT,
     pregunta26 TEXT,
+    pregunta26_comentarios TEXT,
     pregunta27 TEXT,
+    pregunta27_comentarios TEXT,
     pregunta28 TEXT,
     fechaRegistro TEXT
   )`);
 });
 
 // Inserción de datos en la tabla respuestas
-router.post('/submit', function(req, res, next) {
+  router.post('/submit', function(req, res, next) {
   const r = req.body;
   const fechaRegistro = new Date().toISOString();
 
   const stmt = db.prepare(`INSERT INTO respuestas (
     nombreCompleto, fechaActual, agenciaParticipante,
-    pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta5_otro,
+    pregunta1, pregunta2, pregunta3, pregunta4, pregunta4_comentarios, pregunta5, pregunta5_otro,
     pregunta6,  pregunta7, pregunta8, pregunta9,
     pregunta10, pregunta10_comentarios, pregunta11, pregunta12, pregunta12_comentarios,
     pregunta13, pregunta14, pregunta14_comentarios, pregunta15, pregunta16, pregunta17,
     pregunta18, pregunta18_comentarios, pregunta19, pregunta19_comentarios, pregunta20,
     pregunta21, pregunta22, pregunta23, pregunta24, pregunta25,
-    pregunta26, pregunta27, pregunta28, fechaRegistro
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    pregunta26, pregunta26_comentarios, pregunta27, pregunta27_comentarios, pregunta28, fechaRegistro
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 
   stmt.run(
     r.nombreCompleto, r.fechaActual, r.agenciaParticipante,
-    r.pregunta1, r.pregunta2, r.pregunta3, r.pregunta4, r.pregunta5, r.pregunta5_otro,
-    r.pregunta6, r.pregunta7, r.pregunta8, r.pregunta9,
+    r.pregunta1, r.pregunta2, r.pregunta3, r.pregunta4, r.pregunta4_comentarios, r.pregunta5, r.pregunta5_otro,
+    r.pregunta6,  r.pregunta7, r.pregunta8, r.pregunta9,
     r.pregunta10, r.pregunta10_comentarios, r.pregunta11, r.pregunta12, r.pregunta12_comentarios,
     r.pregunta13, r.pregunta14, r.pregunta14_comentarios, r.pregunta15, r.pregunta16, r.pregunta17,
     r.pregunta18, r.pregunta18_comentarios, r.pregunta19, r.pregunta19_comentarios, r.pregunta20,
     r.pregunta21, r.pregunta22, r.pregunta23, r.pregunta24, r.pregunta25,
-    r.pregunta26, r.pregunta27, r.pregunta28, fechaRegistro,
+    r.pregunta26, r.pregunta26_comentarios, r.pregunta27, r.pregunta27_comentarios, r.pregunta28, fechaRegistro,
     function(err) {
       if (err) {
         return next(err);
@@ -121,6 +124,10 @@ function renderResultados(req, res, next) {
       SELECT 
         fechaRegistro,
         'pregunta4' AS pregunta, pregunta4 AS respuesta FROM respuestas
+      UNION ALL
+      SELECT 
+        fechaRegistro,
+        'pregunta4_comentarios' AS pregunta, pregunta4_comentarios AS respuesta FROM respuestas
       UNION ALL
       SELECT 
         fechaRegistro,
@@ -236,7 +243,15 @@ function renderResultados(req, res, next) {
       UNION ALL
       SELECT 
         fechaRegistro,
+        'pregunta26_comentarios' AS pregunta, pregunta26_comentarios AS respuesta FROM respuestas
+      UNION ALL
+      SELECT 
+        fechaRegistro,
         'pregunta27' AS pregunta, pregunta27 AS respuesta FROM respuestas
+      UNION ALL
+      SELECT 
+        fechaRegistro,
+        'pregunta27_comentarios' AS pregunta, pregunta27_comentarios AS respuesta FROM respuestas
       UNION ALL
       SELECT 
         fechaRegistro,
@@ -255,15 +270,18 @@ function renderResultados(req, res, next) {
     ORDER BY mes ASC
   `;
 
-const comentariosQuery = `
+  const comentariosQuery = `
     SELECT 
       nombreCompleto,
       fechaRegistro,
+      pregunta4_comentarios,
       pregunta10_comentarios,
       pregunta12_comentarios,
       pregunta14_comentarios,
       pregunta18_comentarios,
       pregunta19_comentarios,
+      pregunta26_comentarios,
+      pregunta27_comentarios,
       pregunta28_comentarios,
       pregunta5_otro
     FROM respuestas
@@ -434,24 +452,24 @@ router.post('/submit', function(req, res, next) {
 
   const stmt = db.prepare(`INSERT INTO respuestas (
     nombreCompleto, fechaActual, agenciaParticipante,
-    pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta5_otro,
+    pregunta1, pregunta2, pregunta3, pregunta4, pregunta4_comentarios, pregunta5, pregunta5_otro,
     pregunta6,  pregunta7, pregunta8, pregunta9,
     pregunta10, pregunta10_comentarios, pregunta11, pregunta12, pregunta12_comentarios,
     pregunta13, pregunta14, pregunta14_comentarios, pregunta15, pregunta16, pregunta17,
     pregunta18, pregunta18_comentarios, pregunta19, pregunta19_comentarios, pregunta20,
     pregunta21, pregunta22, pregunta23, pregunta24, pregunta25,
-    pregunta26, pregunta27, pregunta28, fechaRegistro
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    pregunta26, pregunta26_comentarios, pregunta27, pregunta27_comentarios, pregunta28, fechaRegistro
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 
   stmt.run(
     r.nombreCompleto, r.fechaActual, r.agenciaParticipante,
-    r.pregunta1, r.pregunta2, r.pregunta3, r.pregunta4, r.pregunta5, r.pregunta5_otro,
+    r.pregunta1, r.pregunta2, r.pregunta3, r.pregunta4, r.pregunta4_comentarios, r.pregunta5, r.pregunta5_otro,
     r.pregunta6,  r.pregunta7, r.pregunta8, r.pregunta9,
     r.pregunta10, r.pregunta10_comentarios, r.pregunta11, r.pregunta12, r.pregunta12_comentarios,
     r.pregunta13, r.pregunta14, r.pregunta14_comentarios, r.pregunta15, r.pregunta16, r.pregunta17,
     r.pregunta18, r.pregunta18_comentarios, r.pregunta19, r.pregunta19_comentarios, r.pregunta20,
     r.pregunta21, r.pregunta22, r.pregunta23, r.pregunta24, r.pregunta25,
-    r.pregunta26, r.pregunta27, r.pregunta28, fechaRegistro,
+    r.pregunta26, r.pregunta26_comentarios,  r.pregunta27, r.pregunta27_comentarios, r.pregunta28, fechaRegistro,
     function(err) {
       if (err) {
         return next(err);
@@ -611,11 +629,14 @@ function renderResultados(req, res, next) {
     SELECT 
       nombreCompleto,
       fechaRegistro,
+      pregunta4_comentarios,
       pregunta10_comentarios,
       pregunta12_comentarios,
       pregunta14_comentarios,
       pregunta18_comentarios,
       pregunta19_comentarios,
+      pregunta26_comentarios,
+      pregunta27_comentarios,
       pregunta5_otro
     FROM respuestas
     ORDER BY fechaRegistro DESC

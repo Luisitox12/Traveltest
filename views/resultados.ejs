@@ -200,11 +200,14 @@
         <div class="comentario-encuestado" data-fecha="<%= new Date(c.fechaRegistro).toISOString() %>">
           <h5><%= c.nombreCompleto || 'Encuestado Anónimo' %> - <small><%= new Date(c.fechaRegistro).toLocaleDateString() %></small></h5>
           <% if (c.pregunta5_otro) { %><p><strong>Pregunta 5 - Otro lugar:</strong> <%= c.pregunta5_otro %></p><% } %>
+          <% if (c.pregunta4_comentarios) { %><p><strong>Pregunta 4:</strong> <%= c.pregunta4_comentarios %></p><% } %>
           <% if (c.pregunta10_comentarios) { %><p><strong>Pregunta 10:</strong> <%= c.pregunta10_comentarios %></p><% } %>
           <% if (c.pregunta12_comentarios) { %><p><strong>Pregunta 12:</strong> <%= c.pregunta12_comentarios %></p><% } %>
           <% if (c.pregunta14_comentarios) { %><p><strong>Pregunta 14:</strong> <%= c.pregunta14_comentarios %></p><% } %>
           <% if (c.pregunta18_comentarios) { %><p><strong>Pregunta 18:</strong> <%= c.pregunta18_comentarios %></p><% } %>
           <% if (c.pregunta19_comentarios) { %><p><strong>Pregunta 19:</strong> <%= c.pregunta19_comentarios %></p><% } %>
+          <% if (c.pregunta26_comentarios) { %><p><strong>Pregunta 26:</strong> <%= c.pregunta26_comentarios %></p><% } %>
+          <% if (c.pregunta27_comentarios) { %><p><strong>Pregunta 27:</strong> <%= c.pregunta27_comentarios %></p><% } %>
           <% if (c.pregunta28_comentarios) { %><p><strong>Pregunta 28:</strong> <%= c.pregunta28_comentarios %></p><% } %>
         </div>
       <% }); %>
