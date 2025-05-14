@@ -195,3 +195,16 @@ form {
     margin: 0 auto;
   }
 }
+
+/* ... otros estilos ... */
+
+.boton-volver {
+    background-color: #808080; /* El color gris que deseas */
+    color: white;
+    border: none;
+}
+
+.boton-redondeado {
+    border-radius: 0.3rem; /* El valor de redondeo de Bootstrap para rounded-3 */
+}
+
