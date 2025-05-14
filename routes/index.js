@@ -684,15 +684,23 @@ function renderResultados(req, res, next) {
     });
 
     // Obtener total de respuestas por mes
-    db.all(totalRespuestasQuery, [], (err2, totalRows) => {
-      if (err2) {
-        return next(err2);
-      }
+  db.all(totalRespuestasQuery, [], (err2, totalRows) => {
+    if (err2) {
+      return next(err2);
+    }
 
-      const totalRespuestasPorMes = {};
-      totalRows.forEach(row => {
-        totalRespuestasPorMes[row.mes] = row.total;
-      });
+    const totalRespuestasPorMes = {};
+    totalRows.forEach(row => {
+      totalRespuestasPorMes[row.mes] = row.total;
+    });
+
+    // Nueva consulta para obtener total de participantes
+    const totalParticipantesQuery = `SELECT COUNT(DISTINCT id) AS totalParticipantes FROM respuestas`;
+
+    db.get(totalParticipantesQuery, [], (err4, totalParticipantesRow) => {
+      if (err4) {
+        return next(err4);
+      }
 
       // Obtener comentarios opcionales
       db.all(comentariosQuery, [], (err3, comentariosRows) => {
@@ -709,10 +717,12 @@ function renderResultados(req, res, next) {
           }, {}),
           meses,
           totalRespuestasPorMes,
+          totalParticipantes: totalParticipantesRow.totalParticipantes,
           comentarios: comentariosRows
         });
       });
     });
+  });
   });
 }
 
