@@ -30,8 +30,8 @@
         <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required />
       </div>
       <div class="mb-3">
-        <label for="edadEncuestado" class="form-label">Edad:</label>
-        <input type="number" id="edadEncuestado" name="edadEncuestado" class="form-control" min="0" required />
+        <label for="agenciaParticipante" class="form-label">Agencia Participante:</label>
+        <input type="text" id="agenciaParticipante" name="agenciaParticipante" class="form-control" required />
       </div>
       <input type="hidden" id="fechaActual" name="fechaActual" />
     </section>
@@ -58,7 +58,6 @@
           <input class="form-check-input" type="radio" name="pregunta2" id="pregunta2No" value="No" required>
           <label class="form-check-label" for="pregunta2No">No</label>
         </div>
-        <textarea class="form-control mt-2" name="pregunta2_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
       <div class="mb-3">
         <p>¿Qué aspectos considera que definieron el éxito del FAM TRIP?</p>
@@ -96,7 +95,9 @@
           <option value="Santa Rosa">Santa Rosa</option>
           <option value="Arena Parque Acuatico">Arena Parque Acuático</option>
           <option value="Flor de Venezuela">Flor de Venezuela</option>
+          <option value="Otro">Indique otro lugar (opcional)</option>
         </select>
+        <textarea class="form-control mt-2" name="pregunta5_otro" placeholder="Indique otro lugar (opcional)"></textarea>
       </div>
       <div class="mb-3">
         <p>¿Considera que la duración en cada destino fue adecuada?</p>
@@ -108,7 +109,6 @@
           <input class="form-check-input" type="radio" name="pregunta6" id="pregunta6No" value="No" required>
           <label class="form-check-label" for="pregunta6No">No</label>
         </div>
-        <textarea class="form-control mt-2" name="pregunta6_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
       <div class="mb-3">
         <p>¿Qué lugares deben ser incluidos en el itinerario que le hubiera gustado visitar?</p>
@@ -124,7 +124,6 @@
           <input class="form-check-input" type="radio" name="pregunta8" id="pregunta8No" value="No" required>
           <label class="form-check-label" for="pregunta8No">No</label>
         </div>
-        <textarea class="form-control mt-2" name="pregunta8_comentarios" placeholder="Detalles (opcional)"></textarea>
       </div>
     </section>
     <hr />
@@ -143,14 +142,14 @@
       </div>
       <div class="mb-3">
         <p>¿El transporte utilizado durante el FAM TRIP cumplió con sus expectativas de comodidad y eficiencia?</p>
-        <select class="form-select" id="pregunta10" name="pregunta10" required>
-          <option value="">Seleccione</option>
-          <option value="Excelente">1 - Excelente</option>
-          <option value="Buena">2 - Buena</option>
-          <option value="Regular">3 - Regular</option>
-          <option value="Mala">4 - Mala</option>
-          <option value="Muy mala">5 - Muy mala</option>
-        </select>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta10" id="pregunta10Si" value="Si" required>
+          <label class="form-check-label" for="pregunta10Si">Sí</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="pregunta10" id="pregunta10No" value="No" required>
+          <label class="form-check-label" for="pregunta10No">No</label>
+        </div>
         <textarea class="form-control mt-2" name="pregunta10_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
       <div class="mb-3">
@@ -163,7 +162,6 @@
           <input class="form-check-input" type="radio" name="pregunta11" id="pregunta11No" value="No" required>
           <label class="form-check-label" for="pregunta11No">No</label>
         </div>
-        <textarea class="form-control mt-2" name="pregunta11_comentarios" placeholder="Detalles (opcional)"></textarea>
       </div>
       <div class="mb-3">
         <p>¿Considera que el personal de protocolo estuvo disponible y fue resolutivo?</p>
@@ -210,7 +208,6 @@
           <option value="">Seleccione</option>
           <option value="Si">Sí</option>
           <option value="No">No</option>
-          <option value="No aplica">No aplica</option>
         </select>
       </div>
       <div class="mb-3">
@@ -238,7 +235,6 @@
           <option value="Mala">4 - Mala</option>
           <option value="Muy mala">5 - Muy mala</option>
         </select>
-        <textarea class="form-control mt-2" name="pregunta17_comentarios" placeholder="Comentarios (opcional)"></textarea>
       </div>
       <div class="mb-3">
         <p>¿Considera que recibió una atención adecuada por parte del equipo organizador durante el viaje?</p>
@@ -278,7 +274,6 @@
           <input class="form-check-input" type="radio" name="pregunta20" id="pregunta20No" value="No" required>
           <label class="form-check-label" for="pregunta20No">No</label>
         </div>
-        <textarea class="form-control mt-2" name="pregunta20_comentarios" placeholder="Explique (opcional)"></textarea>
       </div>
       <div class="mb-3">
         <p>¿Qué elementos del FAM TRIP considera más relevante para su negocio o actividad profesional?</p>
@@ -301,7 +296,6 @@
           <input class="form-check-input" type="radio" name="pregunta22" id="pregunta22No" value="No" required>
           <label class="form-check-label" for="pregunta22No">No</label>
         </div>
-        <textarea class="form-control mt-2" name="pregunta22_comentarios" placeholder="Explique (opcional)"></textarea>
       </div>
     </section>
     <hr />
@@ -317,7 +311,6 @@
           <input class="form-check-input" type="radio" name="pregunta23" id="pregunta23No" value="No" required>
           <label class="form-check-label" for="pregunta23No">No</label>
         </div>
-        <textarea class="form-control mt-2" name="pregunta23_comentarios" placeholder="Sugerencias (opcional)"></textarea>
       </div>
       <div class="mb-3">
         <p>¿Qué aspectos del destino le sorprendieron positivamente?</p>

@@ -199,18 +199,12 @@
       <% comentarios.forEach(function(c) { %>
         <div class="comentario-encuestado" data-fecha="<%= new Date(c.fechaRegistro).toISOString() %>">
           <h5><%= c.nombreCompleto || 'Encuestado Anónimo' %> - <small><%= new Date(c.fechaRegistro).toLocaleDateString() %></small></h5>
-          <% if (c.pregunta2_comentarios) { %><p><strong>Pregunta 2:</strong> <%= c.pregunta2_comentarios %></p><% } %>
-          <% if (c.pregunta6_comentarios) { %><p><strong>Pregunta 6:</strong> <%= c.pregunta6_comentarios %></p><% } %>
-          <% if (c.pregunta8_comentarios) { %><p><strong>Pregunta 8:</strong> <%= c.pregunta8_comentarios %></p><% } %>
+          <% if (c.pregunta5_otro) { %><p><strong>Pregunta 5 - Otro lugar:</strong> <%= c.pregunta5_otro %></p><% } %>
           <% if (c.pregunta10_comentarios) { %><p><strong>Pregunta 10:</strong> <%= c.pregunta10_comentarios %></p><% } %>
-          <% if (c.pregunta11_comentarios) { %><p><strong>Pregunta 11:</strong> <%= c.pregunta11_comentarios %></p><% } %>
           <% if (c.pregunta12_comentarios) { %><p><strong>Pregunta 12:</strong> <%= c.pregunta12_comentarios %></p><% } %>
           <% if (c.pregunta14_comentarios) { %><p><strong>Pregunta 14:</strong> <%= c.pregunta14_comentarios %></p><% } %>
-          <% if (c.pregunta17_comentarios) { %><p><strong>Pregunta 17:</strong> <%= c.pregunta17_comentarios %></p><% } %>
           <% if (c.pregunta18_comentarios) { %><p><strong>Pregunta 18:</strong> <%= c.pregunta18_comentarios %></p><% } %>
           <% if (c.pregunta19_comentarios) { %><p><strong>Pregunta 19:</strong> <%= c.pregunta19_comentarios %></p><% } %>
-          <% if (c.pregunta20_comentarios) { %><p><strong>Pregunta 20:</strong> <%= c.pregunta20_comentarios %></p><% } %>
-          <% if (c.pregunta23_comentarios) { %><p><strong>Pregunta 23:</strong> <%= c.pregunta23_comentarios %></p><% } %>
           <% if (c.pregunta28_comentarios) { %><p><strong>Pregunta 28:</strong> <%= c.pregunta28_comentarios %></p><% } %>
         </div>
       <% }); %>
