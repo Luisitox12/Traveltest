@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><%= title %></title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <link rel="stylesheet" href="/stylesheets/barras.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style media="print">
     .bar-fill {
@@ -34,9 +34,37 @@
       print-color-adjust: exact !important;
     }
   </style>
+
+  <style>
+    #comentarios-preguntas-section {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .comentario-pregunta {
+      border-bottom: 1px solid #ccc;
+      padding: 0.5rem 0;
+    }
+    .comentario-pregunta:last-child {
+      border-bottom: none;
+    }
+    .comentario-pregunta h5 {
+      margin: 0 0 0.5rem 0;
+      font-weight: 600;
+      color: var(--color-grey, #666);
+    }
+    .comentario-pregunta p {
+      margin: 0.25rem 0;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
   <% 
+    // Mapeo de preguntas a sus textos extraídos del formulario
     const textosPreguntas = {
       pregunta1: "1. ¿Cómo califica su experiencia, en general, en el FAM TRIP a Barquisimeto?",
       pregunta2: "2. ¿Le gustaría participar nuevamente en un FAM TRIP organizado por el departamento organizador?",
@@ -78,53 +106,31 @@
         return porcentajes;
       });
     }
-
-    // Función para ordenar las claves de preguntas numéricamente
-    function ordenarPreguntas(keys) {
-      return keys.sort((a, b) => {
-        const numA = parseInt(a.replace('pregunta', ''), 10);
-        const numB = parseInt(b.replace('pregunta', ''), 10);
-        return numA - numB;
-      });
-    }
   %>
-  <div class="container my-4">
-    <header class="text-center mb-4">
-      <h1>Resultados de la Encuesta</h1>
+  <div class="container">
+    <header class="header">
+      <h1 class="text-center">Resultados de la Encuesta</h1>
     </header>
     <hr />
-    <section class="mb-3">
-      <label for="mesSelector" class="form-label">Seleccione el mes:</label>
-      <select id="mesSelector" class="form-select" style="max-width: 200px;">
-        <% meses.forEach(function(mes) { %>
-          <option value="<%= mes %>"><%= mes %></option>
-        <% }); %>
-      </select>
-    </section>
-    <section class="bars-container mb-4">
+    <section class="bars-container">
       <h3>Barras con porcentaje por pregunta y opción</h3>
-      <% 
-        const preguntasOrdenadas = ordenarPreguntas(Object.keys(dataPorPregunta));
-        preguntasOrdenadas.forEach(function(pregunta) { 
-      %>
+      <% Object.keys(dataPorPregunta).forEach(function(pregunta) { %>
         <h4><%= textosPreguntas[pregunta] || pregunta %></h4>
         <% 
+          const mesesData = meses.map(mes => dataPorPregunta[pregunta][mes] || {});
+          const porcentajes = calcularPorcentajes(mesesData);
           const opciones = opcionesRespuestaPorPregunta[pregunta];
           const promedioPorOpcion = {};
           opciones.forEach(opcion => {
             let suma = 0;
-            let count = 0;
-            meses.forEach(mes => {
-              if (dataPorPregunta[pregunta][mes]) {
-                suma += parseFloat(dataPorPregunta[pregunta][mes][opcion]) || 0;
-                count++;
-              }
+            porcentajes.forEach(p => {
+              suma += parseFloat(p[opcion]) || 0;
             });
-            promedioPorOpcion[opcion] = count ? (suma / count).toFixed(2) : 0;
+            promedioPorOpcion[opcion] = (suma / porcentajes.length).toFixed(2);
           });
         %>
         <% opciones.forEach(function(opcion) { %>
-          <div class="bar-wrapper" data-pregunta="<%= pregunta %>" data-opcion="<%= opcion %>">
+          <div class="bar-wrapper">
             <div class="bar-label"><%= opcion %></div>
             <div class="bar">
               <div class="bar-fill" data-width="<%= promedioPorOpcion[opcion] + '%' %>">
@@ -136,11 +142,11 @@
       <% }); %>
     </section>
     <hr />
-    <section class="mb-3">
-      <button class="btn btn-primary" onclick="window.print()">Imprimir / Guardar como PDF</button>
+    <section>
+      <button class="submit-button" onclick="window.print()">Imprimir / Guardar como PDF</button>
     </section>
-    <section class="mb-3">
-      <a href="/" class="btn btn-secondary">Volver a la Encuesta</a>
+    <section>
+      <a href="/" class="submit-button">Volver a la Encuesta</a>
     </section>
   </div>
 
@@ -181,123 +187,33 @@
     window.addEventListener('beforeprint', aplicarAnchoBarras);
   </script>
 
-  <style>
-    #comentarios-section {
-      margin: 2rem auto;
-      max-width: 900px;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 1rem;
-      border-radius: 8px;
-      display: none;
-    }
-    #comentarios-toggle {
-      display: block;
-      margin: 1rem auto;
-      padding: 0.5rem 1rem;
-      background-color: var(--bs-primary);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .comentario-encuestado {
-      border-bottom: 1px solid #dee2e6;
-      padding: 0.5rem 0;
-    }
-    .comentario-encuestado:last-child {
-      border-bottom: none;
-    }
-    .comentario-encuestado h5 {
-      margin: 0 0 0.5rem 0;
-      font-weight: 600;
-      color: #6c757d;
-    }
-    .comentario-encuestado p {
-      margin: 0.25rem 0;
-      white-space: pre-wrap;
-    }
-  </style>
-
-  <button id="comentarios-toggle" class="btn btn-primary">Mostrar/Ocultar Sugerencias Opcionales</button>
-  <section id="comentarios-section" class="container">
-    <h3>Sugerencias y Comentarios Opcionales por Encuestado</h3>
+  <button id="comentarios-preguntas-toggle" class="btn btn-info mt-3">Mostrar/Ocultar Comentarios de Preguntas</button>
+  <section id="comentarios-preguntas-section" style="display:none; margin-top: 1rem;">
+    <h3>Comentarios de Preguntas Disponibles</h3>
     <% if (comentarios && comentarios.length > 0) { %>
       <% comentarios.forEach(function(c) { %>
-        <div class="comentario-encuestado" data-fecha="<%= new Date(c.fechaRegistro).toISOString() %>">
+        <div class="comentario-pregunta" data-fecha="<%= new Date(c.fechaRegistro).toISOString() %>">
           <h5><%= c.nombreCompleto || 'Encuestado Anónimo' %> - <small><%= new Date(c.fechaRegistro).toLocaleDateString() %></small></h5>
-          <% if (c.pregunta5_otro) { %><p><strong>Pregunta 5 - Otro lugar:</strong> <%= c.pregunta5_otro %></p><% } %>
-          <% if (c.pregunta4_comentarios) { %><p><strong>Pregunta 4:</strong> <%= c.pregunta4_comentarios %></p><% } %>
-          <% if (c.pregunta10_comentarios) { %><p><strong>Pregunta 10:</strong> <%= c.pregunta10_comentarios %></p><% } %>
-          <% if (c.pregunta12_comentarios) { %><p><strong>Pregunta 12:</strong> <%= c.pregunta12_comentarios %></p><% } %>
-          <% if (c.pregunta14_comentarios) { %><p><strong>Pregunta 14:</strong> <%= c.pregunta14_comentarios %></p><% } %>
-          <% if (c.pregunta18_comentarios) { %><p><strong>Pregunta 18:</strong> <%= c.pregunta18_comentarios %></p><% } %>
-          <% if (c.pregunta19_comentarios) { %><p><strong>Pregunta 19:</strong> <%= c.pregunta19_comentarios %></p><% } %>
-          <% if (c.pregunta26_comentarios) { %><p><strong>Pregunta 26:</strong> <%= c.pregunta26_comentarios %></p><% } %>
-          <% if (c.pregunta27_comentarios) { %><p><strong>Pregunta 27:</strong> <%= c.pregunta27_comentarios %></p><% } %>
-          <% if (c.pregunta28_comentarios) { %><p><strong>Pregunta 28:</strong> <%= c.pregunta28_comentarios %></p><% } %>
+          <% Object.keys(c).forEach(function(key) { 
+               if (key.endsWith('_comentarios') && c[key]) { %>
+            <p><strong><%= key.replace('_comentarios', '').replace('pregunta', 'Pregunta ') %>:</strong> <%= c[key] %></p>
+          <% } }); %>
         </div>
       <% }); %>
     <% } else { %>
-      <p>No hay sugerencias o comentarios disponibles.</p>
+      <p>No hay comentarios de preguntas disponibles.</p>
     <% } %>
   </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
   <script>
-    document.getElementById('comentarios-toggle').addEventListener('click', function() {
-      const section = document.getElementById('comentarios-section');
+    document.getElementById('comentarios-preguntas-toggle').addEventListener('click', function() {
+      const section = document.getElementById('comentarios-preguntas-section');
       if (section.style.display === 'none' || section.style.display === '') {
         section.style.display = 'block';
-        this.textContent = 'Ocultar Sugerencias Opcionales';
+        this.textContent = 'Ocultar Comentarios de Preguntas';
       } else {
         section.style.display = 'none';
-        this.textContent = 'Mostrar Sugerencias Opcionales';
-      }
-    });
-
-    // Filtrar resultados por mes
-    document.getElementById('mesSelector').addEventListener('change', function() {
-      const mesSeleccionado = this.value;
-
-      // Filtrar barras
-      const barras = document.querySelectorAll('.bar-wrapper');
-      barras.forEach(barra => {
-        const pregunta = barra.getAttribute('data-pregunta');
-        const opcion = barra.getAttribute('data-opcion');
-        const dataMes = dataPorPregunta[pregunta] && dataPorPregunta[pregunta][mesSeleccionado];
-        if (dataMes && dataMes[opcion] !== undefined) {
-          const total = Object.values(dataMes).reduce((a,b) => a + b, 0);
-          const porcentaje = total ? (dataMes[opcion] / total * 100).toFixed(2) : 0;
-          barra.querySelector('.bar-fill').style.width = porcentaje + '%';
-          barra.querySelector('.bar-fill').textContent = porcentaje + '%';
-          barra.style.display = 'block';
-        } else {
-          barra.style.display = 'none';
-        }
-      });
-
-      // Filtrar comentarios
-      const comentarios = document.querySelectorAll('.comentario-encuestado');
-      comentarios.forEach(comentario => {
-        const fechaRegistroISO = comentario.getAttribute('data-fecha');
-        const mesComentario = fechaRegistroISO ? fechaRegistroISO.slice(0,7) : '';
-        if (mesComentario === mesSeleccionado) {
-          comentario.style.display = 'block';
-        } else {
-          comentario.style.display = 'none';
-        }
-      });
-    });
-
-    // Seleccionar el mes más reciente por defecto
-    document.addEventListener('DOMContentLoaded', () => {
-      const mesSelector = document.getElementById('mesSelector');
-      if (mesSelector.options.length > 0) {
-        mesSelector.value = mesSelector.options[mesSelector.options.length - 1].value;
-        mesSelector.dispatchEvent(new Event('change'));
+        this.textContent = 'Mostrar Comentarios de Preguntas';
       }
     });
   </script>
